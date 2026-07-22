@@ -410,11 +410,24 @@ if (isFirefox) {
     return preferred;
   };
 
+  /** 98.css uses .title-bar.inactive; shell keeps .window.active (inverted). */
+  const syncTitleBarInactive = () => {
+    dashboard.querySelectorAll('.window').forEach((win) => {
+      const titleBar = win.querySelector(':scope > .title-bar');
+      if (!titleBar) {
+        return;
+      }
+
+      titleBar.classList.toggle('inactive', !win.classList.contains('active'));
+    });
+  };
+
   const bringWindowToFront = (win) => {
     dashboard.querySelectorAll('.window.active').forEach((el) => {
       el.classList.remove('active');
     });
     win.classList.add('active');
+    syncTitleBarInactive();
     zCounter += 1;
     win.style.zIndex = String(zCounter);
     savePositions();
@@ -424,6 +437,7 @@ if (isFirefox) {
     dashboard.querySelectorAll('.window.active').forEach((el) => {
       el.classList.remove('active');
     });
+    syncTitleBarInactive();
     savePositions();
   };
 
@@ -524,10 +538,13 @@ if (isFirefox) {
         zCounter,
         Number.parseInt(activeWindow.style.zIndex, 10) || zCounter,
       );
+      syncTitleBarInactive();
     } else {
       const fallbackActive = dashboard.querySelector('.window.active');
       if (fallbackActive) {
         bringWindowToFront(fallbackActive);
+      } else {
+        syncTitleBarInactive();
       }
     }
   };
@@ -678,7 +695,7 @@ if (isFirefox) {
         return;
       }
 
-      const header = event.target.closest('header');
+      const header = event.target.closest('.title-bar');
       const interactive = event.target.closest('button, a, input, select, textarea, label');
 
       if (!header || !win.contains(header) || interactive) {
@@ -747,7 +764,7 @@ if (isFirefox) {
     const description = link.getAttribute('data-description') ?? '';
     const imageUrl = backgroundImageUrl(icon);
 
-    const feature = win.querySelector('.box.feature');
+    const feature = win.querySelector('.feature');
     if (feature) {
       const featureIcon = feature.querySelector('img.feature-icon');
       const featureTitle = feature.querySelector('h1.feature-title');
@@ -769,7 +786,7 @@ if (isFirefox) {
       feature.classList.remove('unselected');
     }
 
-    const statusDescription = win.querySelector('footer.statusbar .box.description');
+    const statusDescription = win.querySelector('.status-bar .status-bar-field.description');
     if (statusDescription) {
       statusDescription.textContent = description;
     }
@@ -784,11 +801,11 @@ if (isFirefox) {
       link.blur();
     });
 
-    win.querySelectorAll('.box.feature').forEach((feature) => {
+    win.querySelectorAll('.feature').forEach((feature) => {
       feature.classList.add('unselected');
     });
 
-    win.querySelectorAll('footer.statusbar .box.description').forEach((description) => {
+    win.querySelectorAll('.status-bar .status-bar-field.description').forEach((description) => {
       description.textContent = '';
     });
   };
