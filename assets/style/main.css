@@ -1,4 +1,4 @@
-/* Shell + product layouts on top of vendored 98.css */
+/* Shell + product layouts on top of 98.css (npm: node_modules/98.css) */
 
 *, *::before, *::after {
   box-sizing: border-box;

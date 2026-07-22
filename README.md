@@ -7,16 +7,15 @@ A teal desktop shell with draggable icons/windows, built on [98.css](https://git
 ## Run locally
 
 ```bash
-# any static server, e.g.:
-python3 -m http.server 8765
-# then open http://127.0.0.1:8765/
+npm install
+npm run dev
 ```
 
-Or open `index.html` directly in a browser (some features prefer http://).
+This serves the project on http://127.0.0.1:8765/ and opens it in your browser. Styles load from `node_modules/98.css/dist/`.
 
 ## Status
 
-Early concept. Window chrome and controls use vendored **98.css 0.1.21** (`assets/vendor/`, Pixelated MS Sans Serif). Product-specific shell pieces remain custom (desktop, icons, feature panel, wizard layout, resize handles).
+Early concept. Window chrome and controls use **98.css 0.1.21** via npm (`Pixelated MS Sans Serif` included). Product-specific shell pieces remain custom (desktop, icons, feature panel, wizard layout, resize handles).
 
 ## License
 
