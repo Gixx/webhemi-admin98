@@ -1,5 +1,13 @@
 /* Shell + product layouts on top of 98.css (npm: node_modules/98.css) */
 
+@font-face {
+  font-family: "WebHemi Sans Serif";
+  src: url("../fonts/WebHemi Sans Serif.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -21,16 +29,36 @@ body.dashboard {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
-  overflow-x: hidden;
   background-color: #008284;
   color: #222;
-  font-family: "Pixelated MS Sans Serif", Arial, sans-serif;
-  font-size: 11px;
+  font-family: "WebHemi Sans Serif", "Segoe UI", Tahoma, sans-serif;
+  /* Pixelated MS Sans was 11px; WebHemi glyphs read ~9–14% shorter at the same size. */
+  font-size: 12px;
   font-weight: 400;
-  -webkit-font-smoothing: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-variant-ligatures: no-common-ligatures;
   font-feature-settings: "kern", "liga" 0, "clig" 0;
   scroll-behavior: smooth;
+}
+
+/* Override 98.css Pixelated MS Sans Serif on chrome/controls. */
+.title-bar,
+.window,
+button,
+input,
+label,
+legend,
+li[role="tab"],
+option,
+select,
+table,
+textarea,
+ul.tree-view {
+  font-family: "WebHemi Sans Serif", "Segoe UI", Tahoma, sans-serif;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 *:focus {
@@ -63,14 +91,6 @@ body.dashboard {
   cursor: move;
 }
 
-.dashboard .window[draggable="true"] > .title-bar {
-  cursor: move;
-}
-
-.dashboard .icon[draggable="true"] {
-  cursor: move;
-}
-
 .icon > a {
   display: block;
   text-align: center;
@@ -93,6 +113,10 @@ body.dashboard {
   font-size: 1.3rem;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.icon > a:focus {
+  outline: none !important;
 }
 
 .icon > a:focus > span {
@@ -149,6 +173,15 @@ body.dashboard {
   z-index: 1;
 }
 
+.window.is-closed,
+.window.is-minimized {
+  display: none !important;
+}
+
+.window.is-maximized > .window-resize-handle {
+  display: none;
+}
+
 .window.resizable {
   min-width: 50rem;
   min-height: 34rem;
@@ -164,22 +197,25 @@ body.dashboard {
 .window.resizable > .window-body {
   flex: 1 1 auto;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.window.resizable > .window-body > .control-panel-layout {
+/*
+ * Scroll host is .window-pane.scrollable (inside sunken chrome).
+ * Pane fills the body; when content is taller, the custom scrollbar scrolls
+ * feature panel + icon grid together.
+ */
+.window.resizable > .window-body > .window-pane {
+  box-sizing: border-box;
   flex: 1 1 auto;
-  align-items: stretch;
+  min-height: 0;
+  width: 100%;
 }
 
-.window.resizable.is-sized > .window-body > .control-panel-layout {
-  min-height: 100%;
-}
-
-.window.resizable.is-sized > .window-body > .control-panel-layout.mh500 {
-  min-height: 100%;
+.window.resizable.is-sized > .window-body > .window-pane.mh500 {
+  min-height: 0;
 }
 
 .window-resize-handle {
@@ -269,46 +305,75 @@ html.is-window-resizing * {
 
 .title-bar-text.control-panel,
 .title-bar-text.settings {
-  padding-left: 2rem;
+  padding-left: 22px;
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: 2px center;
+  background-size: 16px 16px;
 }
 
 .title-bar-text.control-panel {
-  background-image: url("../icons/16x16/control_panel.gif");
+  background-image: url("../icons/48x48/control_panel.gif");
 }
 
 .title-bar-text.settings {
-  background-image: url("../icons/16x16/settings.gif");
+  background-image: url("../icons/48x48/settings.gif");
+}
+
+.status-bar .status-bar-field {
+  white-space: nowrap;
 }
 
 .status-bar .status-bar-field.size,
 .status-bar .status-bar-field.status {
   flex-grow: 0;
-  width: 22rem;
+  flex-basis: 12rem;
+  width: 12rem;
+  max-width: 30%;
 }
 
 .status-bar .status-bar-field.description {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+/*
+ * Bleed content to the window chrome inside .window-body
+ * (98.css uses margin: 8px on .window-body).
+ */
+.stretched {
+  margin-top: -7px;
+  margin-right: -8px;
+  margin-left: -8px;
+  width: calc(100% + 16px);
+  max-width: none;
+  box-sizing: border-box;
 }
 
 /* --- Login --- */
 
 #window-authentication .login-banner {
   display: block;
-  width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+#window-authentication .field-row {
+  justify-content: space-between;
 }
 
 #window-authentication .field-row label {
-  min-width: 7rem;
+  min-width: 7.5rem;
+  flex: 0 0 auto;
+}
+
+#window-authentication .field-row input {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 22rem;
 }
 
 #window-authentication .login-actions {
   justify-content: flex-end;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 /* --- Setup wizard --- */
@@ -317,12 +382,11 @@ html.is-window-resizing * {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  border-bottom: 1px solid #868a8e;
-  margin: -8px -8px 0;
 }
 
 .wizard-banner {
   flex: 0 0 auto;
+  background: #000080;
 }
 
 .wizard-banner img {
@@ -332,37 +396,52 @@ html.is-window-resizing * {
 .wizard-info {
   flex: 1 1 auto;
   background: #fff;
-  padding: 1.7rem 1.1rem;
-  border-left: 1px solid #fff;
-  box-shadow: inset 1px 0 #868a8e;
+  padding: 16px 14px;
 }
 
 .wizard-info h4 {
   font-size: 13px;
   font-weight: 700;
-  margin: 0 0 1.2rem;
+  margin: 0 0 12px;
 }
 
 .wizard-info p {
   font-size: 11px;
-  margin: 0 0 1.2rem;
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+
+.wizard-info p:last-child {
+  margin-bottom: 0;
 }
 
 .wizard-actions {
   justify-content: flex-end;
-  margin-top: 12px;
-  padding-top: 8px;
-  border-top: 1px solid #fff;
-  box-shadow: inset 0 1px #868a8e;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.wizard-actions > * + * {
+  margin-left: 0;
 }
 
 /* --- Control Panel feature panel --- */
+
+#window-control-panel > .window-body {
+  margin: 4px;
+  padding: 0;
+}
 
 .control-panel-layout {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  min-height: 50rem;
+  min-height: 0;
+}
+
+/* Flex lives on the viewport after scrollbar.js wraps children. */
+.control-panel-layout.has-custom-scrollbar {
+  display: grid;
 }
 
 .box-icon-list {
@@ -372,7 +451,7 @@ html.is-window-resizing * {
   align-items: flex-start;
   align-content: flex-start;
   flex: 1 1 auto;
-  padding: 2rem;
+  padding: 1.2rem;
   background: #fff;
 }
 
@@ -380,9 +459,11 @@ html.is-window-resizing * {
   display: flex;
   flex-direction: column;
   flex: 0 0 17.5rem;
-  min-width: 20rem;
-  padding: 1.5rem;
+  min-width: 18rem;
+  max-width: 22rem;
+  padding: 1.2rem 1.4rem;
   background: linear-gradient(182deg, rgba(16, 134, 214, 0.4) 0%, #fff 100%);
+  border-right: 1px solid #dfdfdf;
 }
 
 .feature > img,
@@ -405,52 +486,326 @@ html.is-window-resizing * {
 }
 
 .feature > .feature-title {
-  font-size: 2.8rem;
-  font-weight: bolder;
-  margin: 1rem 0;
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0.8rem 0;
   min-width: 11rem;
-  text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #000080;
+  word-break: break-word;
+  line-break: anywhere;
 }
 
 .feature > .feature-separator {
-  margin: 1rem 0 2.5rem 0;
+  margin: 0.8rem 0 1.6rem 0;
   border: 0;
-  border-top: 0.1rem solid #5a94c6;
+  border-top: 1px solid #5a94c6;
 }
 
 .feature > .feature-description {
   max-width: 100%;
   overflow-wrap: break-word;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  line-height: 1.35;
 }
 
-/* --- Settings --- */
+/* --- Layout primitives (dialog / form building blocks) --- */
 
-.settings-layout {
+.columns {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  gap: 1rem;
+  gap: 12px;
 }
 
-.settings-options {
-  flex: 1 1 50%;
+.columns > * {
+  flex: 1 1 0;
   min-width: 0;
 }
 
-.settings-options fieldset {
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+/* Content-sized group boxes; do not stretch to fill the column. */
+.stack > fieldset {
+  flex: 0 0 auto;
   width: 100%;
+  height: auto;
+  box-sizing: border-box;
 }
 
-.settings-preview {
-  flex: 1 1 50%;
+/*
+ * Horizontal group of .field-row items (radios, checkboxes, etc.).
+ * 98.css .field-row is the label+control pair; this lays those pairs in a row.
+ */
+.field-column {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.field-column > .field-row {
+  margin-top: 0;
+  margin-left: 12px;
+}
+
+.field-column > .field-row > * + * {
+  margin-left: 6px;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+/* 98.css .sunken-panel defaults to white; keep surface gray unless asked. */
+.sunken-panel {
+  background-color: silver;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+/*
+ * Custom Win98 scrollbar host (see assets/script/scrollbar.js).
+ * .scrollable becomes a grid shell; .scrollable-viewport is the real overflow box.
+ */
+.scrollable {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.scrollable.has-custom-scrollbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.scrollable.has-custom-scrollbar.sb-show-y {
+  grid-template-columns: minmax(0, 1fr) 16px;
+}
+
+.scrollable.has-custom-scrollbar.sb-show-x {
+  grid-template-rows: minmax(0, 1fr) 17px;
+}
+
+.scrollable-viewport {
+  grid-column: 1;
+  grid-row: 1;
   min-width: 0;
-  min-height: 12rem;
-  padding: 1rem;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  box-sizing: border-box;
 }
 
-.settings-preview p {
+.scrollable-viewport::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+.sunken-panel.scrollable:not(.control-panel-layout) .scrollable-viewport {
+  padding: 10px;
+  min-height: 10rem;
+}
+
+.control-panel-layout.has-custom-scrollbar > .scrollable-viewport {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background-color: #fff;
+}
+
+.control-panel-layout.has-custom-scrollbar.sb-show-y > .scrollable-viewport > .box-icon-list {
+  padding-right: 1.2rem;
+}
+
+.scrollable > .sb {
+  box-sizing: border-box;
+  user-select: none;
+  z-index: 5;
+}
+
+.scrollable > .sb-y,
+.scrollable > .sb-x,
+.scrollable > .sb-corner {
+  display: none;
+}
+
+.scrollable.sb-show-y > .sb-y {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  width: 16px;
+  background: #dfdfdf;
+}
+
+.scrollable.sb-show-x > .sb-x {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  height: 17px;
+  background: #dfdfdf;
+}
+
+.scrollable.sb-show-y.sb-show-x > .sb-corner {
+  grid-column: 2;
+  grid-row: 2;
+  display: block;
+  width: 16px;
+  height: 17px;
+  background: #dfdfdf;
+}
+
+.scrollable > .sb .sb-btn {
+  flex: 0 0 auto;
+  min-width: 16px;
+  min-height: 17px;
+  width: 16px;
+  height: 17px;
   margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: transparent;
+  text-shadow: none;
+  background-color: silver;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px grey,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-y .sb-dec {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8 6H7v1H6v1H5v1H4v1h7V9h-1V8H9V7H8V6z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-y .sb-inc {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11 6H4v1h1v1h1v1h1v1h1V9h1V8h1V7h1V6z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-x .sb-dec {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9 4H8v1H7v1H6v1H5v1h1v1h1v1h1v1h1V4z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-x .sb-inc {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7 4H6v7h1v-1h1V9h1V8h1V7H9V6H8V5H7V4z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-y .sb-dec:disabled {
+  background-image: url("../icons/buttons/scroll-up-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-y .sb-inc:disabled {
+  background-image: url("../icons/buttons/scroll-down-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-x .sb-dec:disabled {
+  background-image: url("../icons/buttons/scroll-left-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-x .sb-inc:disabled {
+  background-image: url("../icons/buttons/scroll-right-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-x .sb-btn {
+  height: 17px;
+  width: 16px;
+}
+
+.scrollable > .sb .sb-btn:not(:disabled):active {
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px grey;
+}
+
+.scrollable > .sb .sb-btn:disabled {
+  opacity: 1;
+  filter: none;
+  color: transparent;
+  text-shadow: none;
+}
+
+.scrollable > .sb .sb-track {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  background-color: #dfdfdf;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='2' height='2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1 0H0v1h1v1h1V1H1V0z' fill='silver'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 0H1v1H0v1h1V1h1V0z' fill='%23fff'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb .sb-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  background-color: #b5b5b5;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px #808080,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-y .sb-thumb {
+  width: 100%;
+  min-height: 17px;
+}
+
+.scrollable > .sb-x .sb-thumb {
+  height: 100%;
+  min-width: 17px;
+}
+
+.scrollable-viewport > p:first-child {
+  margin-top: 0;
+}
+
+.scrollable-viewport > p:last-child {
+  margin-bottom: 0;
 }

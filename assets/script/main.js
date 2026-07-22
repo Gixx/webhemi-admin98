@@ -104,13 +104,39 @@ if (isFirefox) {
       if (el.classList.contains('window')) {
         data[id].zIndex = Number.parseInt(el.style.zIndex, 10) || 1;
         data[id].active = el.classList.contains('active');
+        data[id].closed = el.classList.contains('is-closed');
+        data[id].minimized = el.classList.contains('is-minimized');
+        data[id].maximized = el.classList.contains('is-maximized');
 
-        if (el.style.width) {
-          data[id].width = pxToRemNumber(el.offsetWidth);
-        }
+        if (el.classList.contains('is-maximized')) {
+          const restoreLeft = Number.parseFloat(el.dataset.restoreLeft);
+          const restoreTop = Number.parseFloat(el.dataset.restoreTop);
+          const restoreWidth = Number.parseFloat(el.dataset.restoreWidth);
+          const restoreHeight = Number.parseFloat(el.dataset.restoreHeight);
 
-        if (el.style.height) {
-          data[id].height = pxToRemNumber(el.offsetHeight);
+          if (Number.isFinite(restoreLeft)) {
+            data[id].left = restoreLeft;
+          }
+
+          if (Number.isFinite(restoreTop)) {
+            data[id].top = restoreTop;
+          }
+
+          if (Number.isFinite(restoreWidth) && restoreWidth > 0) {
+            data[id].width = restoreWidth;
+          }
+
+          if (Number.isFinite(restoreHeight) && restoreHeight > 0) {
+            data[id].height = restoreHeight;
+          }
+        } else {
+          if (el.style.width) {
+            data[id].width = pxToRemNumber(el.offsetWidth);
+          }
+
+          if (el.style.height) {
+            data[id].height = pxToRemNumber(el.offsetHeight);
+          }
         }
       }
     });
@@ -422,7 +448,25 @@ if (isFirefox) {
     });
   };
 
+  const syncMaximizeButton = (win) => {
+    const button = win.querySelector(
+      '.title-bar-controls button[aria-label="Maximize"], .title-bar-controls button[aria-label="Restore"]',
+    );
+    if (!button || button.disabled) {
+      return;
+    }
+
+    button.setAttribute('aria-label', win.classList.contains('is-maximized') ? 'Restore' : 'Maximize');
+  };
+
+  const isWindowVisible = (win) =>
+    !win.classList.contains('is-closed') && !win.classList.contains('is-minimized');
+
   const bringWindowToFront = (win) => {
+    if (!isWindowVisible(win)) {
+      return;
+    }
+
     dashboard.querySelectorAll('.window.active').forEach((el) => {
       el.classList.remove('active');
     });
@@ -439,6 +483,106 @@ if (isFirefox) {
     });
     syncTitleBarInactive();
     savePositions();
+  };
+
+  const activateTopVisibleWindow = () => {
+    const visible = [...dashboard.querySelectorAll('.window')].filter(isWindowVisible);
+    if (!visible.length) {
+      clearWindowActive();
+      return;
+    }
+
+    visible.sort(
+      (a, b) =>
+        (Number.parseInt(b.style.zIndex, 10) || 0) - (Number.parseInt(a.style.zIndex, 10) || 0),
+    );
+    bringWindowToFront(visible[0]);
+  };
+
+  const showWindow = (win) => {
+    win.classList.remove('is-closed', 'is-minimized');
+    bringWindowToFront(win);
+  };
+
+  const closeWindow = (win) => {
+    win.classList.add('is-closed');
+    win.classList.remove('is-minimized', 'active');
+    syncTitleBarInactive();
+    activateTopVisibleWindow();
+    savePositions();
+  };
+
+  const minimizeWindow = (win) => {
+    win.classList.add('is-minimized');
+    win.classList.remove('active');
+    syncTitleBarInactive();
+    activateTopVisibleWindow();
+    savePositions();
+  };
+
+  const maximizeWindow = (win) => {
+    if (!win.classList.contains('resizable') || win.classList.contains('is-maximized')) {
+      return;
+    }
+
+    const pos = readPosition(win);
+    win.dataset.restoreLeft = String(pxToRemNumber(pos.left));
+    win.dataset.restoreTop = String(pxToRemNumber(pos.top));
+    win.dataset.restoreWidth = win.style.width ? String(pxToRemNumber(win.offsetWidth)) : '';
+    win.dataset.restoreHeight = win.style.height ? String(pxToRemNumber(win.offsetHeight)) : '';
+
+    setPosition(win, 0, 0);
+    applyWindowSize(win, dashboard.clientWidth, dashboard.clientHeight);
+    win.classList.add('is-maximized');
+    syncMaximizeButton(win);
+    bringWindowToFront(win);
+  };
+
+  const restoreWindow = (win) => {
+    if (!win.classList.contains('is-maximized')) {
+      return;
+    }
+
+    const left = remToPx(Number.parseFloat(win.dataset.restoreLeft));
+    const top = remToPx(Number.parseFloat(win.dataset.restoreTop));
+    const width = Number.parseFloat(win.dataset.restoreWidth);
+    const height = Number.parseFloat(win.dataset.restoreHeight);
+
+    win.classList.remove('is-maximized');
+
+    if (Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0) {
+      applyWindowSize(win, remToPx(width), remToPx(height));
+    } else {
+      win.style.width = '';
+      win.style.height = '';
+      win.classList.remove('is-sized');
+    }
+
+    const next = clamp(
+      win,
+      Number.isFinite(left) ? left : 0,
+      Number.isFinite(top) ? top : 0,
+    );
+    setPosition(win, next.left, next.top);
+    syncMaximizeButton(win);
+    bringWindowToFront(win);
+  };
+
+  const toggleMaximizeWindow = (win) => {
+    if (win.classList.contains('is-maximized')) {
+      restoreWindow(win);
+    } else {
+      maximizeWindow(win);
+    }
+  };
+
+  const openWindowById = (id) => {
+    const win = document.getElementById(id);
+    if (!win || !win.classList.contains('window') || !dashboard.contains(win)) {
+      return;
+    }
+
+    showWindow(win);
   };
 
   const placeAbsolute = () => {
@@ -512,7 +656,8 @@ if (isFirefox) {
           if (
             savedPos &&
             Number.isFinite(savedPos.width) &&
-            Number.isFinite(savedPos.height)
+            Number.isFinite(savedPos.height) &&
+            !savedPos.maximized
           ) {
             applyWindowSize(el, remToPx(savedPos.width), remToPx(savedPos.height));
             const sized = clamp(el, nextLeft, nextTop);
@@ -522,13 +667,45 @@ if (isFirefox) {
           }
         }
 
-        if (savedPos && Object.prototype.hasOwnProperty.call(savedPos, 'active')) {
+        if (savedPos?.closed) {
+          el.classList.add('is-closed');
+        }
+
+        if (savedPos?.minimized) {
+          el.classList.add('is-minimized');
+        }
+
+        if (savedPos?.maximized && el.classList.contains('resizable')) {
+          el.dataset.restoreLeft = String(
+            Number.isFinite(savedPos.left) ? savedPos.left : pxToRemNumber(nextLeft),
+          );
+          el.dataset.restoreTop = String(
+            Number.isFinite(savedPos.top) ? savedPos.top : pxToRemNumber(nextTop),
+          );
+          el.dataset.restoreWidth = Number.isFinite(savedPos.width) ? String(savedPos.width) : '';
+          el.dataset.restoreHeight = Number.isFinite(savedPos.height)
+            ? String(savedPos.height)
+            : '';
+          setPosition(el, 0, 0);
+          applyWindowSize(el, dashboard.clientWidth, dashboard.clientHeight);
+          el.classList.add('is-maximized');
+        }
+
+        syncMaximizeButton(el);
+
+        if (
+          savedPos &&
+          Object.prototype.hasOwnProperty.call(savedPos, 'active') &&
+          isWindowVisible(el)
+        ) {
           el.classList.toggle('active', Boolean(savedPos.active));
           if (savedPos.active) {
             activeWindow = el;
           }
-        } else if (el.classList.contains('active')) {
+        } else if (el.classList.contains('active') && isWindowVisible(el)) {
           activeWindow = el;
+        } else {
+          el.classList.remove('active');
         }
       }
     });
@@ -540,7 +717,7 @@ if (isFirefox) {
       );
       syncTitleBarInactive();
     } else {
-      const fallbackActive = dashboard.querySelector('.window.active');
+      const fallbackActive = [...dashboard.querySelectorAll('.window.active')].find(isWindowVisible);
       if (fallbackActive) {
         bringWindowToFront(fallbackActive);
       } else {
@@ -689,16 +866,20 @@ if (isFirefox) {
 
     const win = event.target.closest('.window');
     if (win && dashboard.contains(win)) {
-      bringWindowToFront(win);
+      if (isWindowVisible(win)) {
+        bringWindowToFront(win);
+      }
 
-      if (!win.matches('[draggable="true"]')) {
+      if (!win.matches('[draggable="true"]') || !isWindowVisible(win)) {
         return;
       }
 
       const header = event.target.closest('.title-bar');
-      const interactive = event.target.closest('button, a, input, select, textarea, label');
+      const interactive = event.target.closest(
+        'button, a, input, select, textarea, label, .sb, .sb-thumb, .sb-track',
+      );
 
-      if (!header || !win.contains(header) || interactive) {
+      if (!header || !win.contains(header) || interactive || win.classList.contains('is-maximized')) {
         return;
       }
 
@@ -735,6 +916,44 @@ if (isFirefox) {
     },
     true,
   );
+
+  dashboard.addEventListener('click', (event) => {
+    const control = event.target.closest('.title-bar-controls button');
+    if (control && dashboard.contains(control) && !control.disabled) {
+      const win = control.closest('.window');
+      if (!win) {
+        return;
+      }
+
+      const action = control.getAttribute('aria-label');
+      event.preventDefault();
+
+      if (action === 'Close') {
+        closeWindow(win);
+      } else if (action === 'Minimize') {
+        minimizeWindow(win);
+      } else if (action === 'Maximize' || action === 'Restore') {
+        toggleMaximizeWindow(win);
+      }
+
+      return;
+    }
+  });
+
+  dashboard.addEventListener('dblclick', (event) => {
+    const openFrom = event.target.closest('[data-open-window]');
+    if (!openFrom || !dashboard.contains(openFrom)) {
+      return;
+    }
+
+    const windowId = openFrom.getAttribute('data-open-window');
+    if (!windowId) {
+      return;
+    }
+
+    event.preventDefault();
+    openWindowById(windowId);
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', placeAbsolute);
@@ -822,35 +1041,35 @@ if (isFirefox) {
     });
   };
 
-  const isBoxIconLink = (target) =>
-    Boolean(target?.closest?.('.box-icon-list .icon a'));
+  const selectBoxIconLink = (link) => {
+    unselectAllIcons(link.closest('.window'));
+    selectIcon(link);
+  };
 
   document.addEventListener('focusin', (event) => {
-    const link = event.target.closest?.('.box-icon-list .icon a');
-    if (link) {
-      unselectAllIcons(link.closest('.window'));
-      selectIcon(link);
+    const boxLink = event.target.closest?.('.box-icon-list .icon a');
+    if (boxLink) {
+      selectBoxIconLink(boxLink);
       return;
     }
 
-    unselectAllIcons();
-  });
-
-  document.addEventListener('pointerdown', (event) => {
-    if (event.button !== 0 || isBoxIconLink(event.target)) {
-      return;
+    // Another icon selection (desktop) clears Control Panel feature selection.
+    if (event.target.closest?.('.icon-list .icon a')) {
+      unselectAllIcons();
     }
-
-    unselectAllIcons();
   });
 
   document.addEventListener('click', (event) => {
-    const link = event.target.closest?.('.box-icon-list .icon a');
-    if (link) {
+    const boxLink = event.target.closest?.('.box-icon-list .icon a');
+    if (boxLink) {
       event.preventDefault();
-      link.focus();
-      unselectAllIcons(link.closest('.window'));
-      selectIcon(link);
+      boxLink.focus();
+      selectBoxIconLink(boxLink);
+      return;
+    }
+
+    if (event.target.closest?.('.icon-list .icon a')) {
+      unselectAllIcons();
     }
   });
 })();

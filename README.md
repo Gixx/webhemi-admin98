@@ -15,7 +15,9 @@ This serves the project on http://127.0.0.1:8765/ and opens it in your browser. 
 
 ## Status
 
-Early concept. Window chrome and controls use **98.css 0.1.21** via npm (`Pixelated MS Sans Serif` included). Product-specific shell pieces remain custom (desktop, icons, feature panel, wizard layout, resize handles).
+Early concept. Window chrome and controls use **98.css 0.1.21** via npm. Shell UX: title-bar Close/Minimize/Maximize, double-click desktop/Control Panel icons to open windows (`data-open-window`), positions persisted in localStorage. Custom pieces: desktop, icons, feature panel, wizard layout, resize handles.
+
+Win98-styled scrollbars are emulated in JavaScript for `.scrollable` hosts (`assets/script/scrollbar.js`): content is moved into a `.scrollable-viewport`, the native bar is hidden, and custom rails appear only for axes that actually overflow.
 
 ## License
 
