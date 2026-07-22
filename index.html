@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Windows UI demo 2026</title>
+  <link rel="stylesheet" href="assets/style/main.css" />
+</head>
+<body class="dashboard">
+
+  <div class="icon-list">
+    <div id="icon-site-portfolio" draggable="true" class="icon site"><a href="#"><span>My Portfolio Site</span></a></div>
+    <div id="icon-site-blog" draggable="true" class="icon site"><a href="#"><span>My Dev Blog Site</span></a></div>
+    <div id="icon-control-panel" draggable="true" class="icon control-panel"><a href="#"><span>Control panel</span></a></div>
+  </div>
+
+  <div id="window-authentication" class="window outerbevel w332" draggable="true">
+    <header>
+      <h3>Enter Password</h3>
+    </header>
+    <section>
+      <div class="panel">
+        <img src="assets/upload/2026-07-18/login-banner.gif" alt="" />
+      </div>
+      <div class="panel rows p10">
+        <div class="box m5">
+          <label for="username" class="grow1" accesskey="u">User name</label>
+          <input type="text" class="innerbevel-inverse w220" name="username" id="username" />
+        </div>
+        <div class="box m5">
+          <label for="password" class="grow1" accesskey="p">Password</label>
+          <input type="password" class="innerbevel-inverse w220" name="password" id="password" />
+        </div>
+      </div>
+      <div class="panel">
+        <div class="box grow1 box-button-list gap10 right">
+          <button accesskey="o"><span>OK</span></button>
+          <button disabled="disabled" accesskey="c"><span>Cancel</span></button>
+          <button class="ellipsis" accesskey="s"><span>Shutdown</span></button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="window-setup-wizard" class="window outerbevel w550" draggable="true">
+    <header>
+      <h3>Windows NT Workstation Setup</h3>
+    </header>
+    <section>
+      <div class="panel panel-bottom">
+        <div class="box grow1">
+          <img src="assets/upload/2026-07-18/setup-wizard.gif" alt="panel decoration" />
+        </div>
+        <div class="box grow2 bg-white box-info rows">
+          <h4>Welcome to the Windows NT 5.0 Setup Wizard</h4>
+          <p>
+            This wizard installs Windows NT 5.0 Workstation on your computer. The wizard will need to gather some
+            information about you and your computer to properly setup Windows NT 5.0
+          </p>
+          <p>
+            Windows NT 5.0 Workstation provides a powerful solution to all your desktop computing needs. Windows NT 5.0
+            Workstation provides the ease of use of Windows with enhanced reliability and security.
+          </p>
+          <p>
+            Click Next to continue with Setup.
+          </p>
+        </div>
+      </div>
+      <div class="panel panel-top">
+        <div class="box grow1"></div>
+        <div class="box grow2 box-button-list center">
+          <button class="previous" disabled="disabled"><span>Back</span></button>
+          <button class="next"><span>Next</span></button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="window-control-panel" class="window outerbevel w1024 active resizable" draggable="true">
+    <header>
+      <h3 class="control-panel">Control Panel</h3>
+      <div class="buttons">
+        <button class="minimize"><span>minimize</span></button>
+        <button class="maximize"><span>maximize</span></button>
+        <button class="close"><span>close</span></button>
+      </div>
+    </header>
+    <section>
+      <div class="panel innerbevel mh500">
+        <div class="box grow1 bg-white bg-heaven feature w175 unselected">
+          <img class="feature-icon" src="assets/icons/48x48/users.gif" alt="Users" />
+          <h1 class="feature-title" lang="en">Users</h1>
+          <hr class="feature-separator" />
+          <p class="feature-description">Manage user who can access the WebHemi CMS.</p>
+        </div>
+        <div class="box bg-white grow2 box-icon-list">
+            <div class="icon sites"><a href="#" data-description="Manage sites and their contents."><span>Sites</span></a></div>
+            <div class="icon hosts"><a href="#" data-description="Add, remove and verify domains and assign them to sites"><span>Hosts</span></a></div>
+            <div class="icon roles"><a href="#" data-description="Add/remove custom roles or view the built-in ones."><span>Roles</span></a></div>
+            <div class="icon permissions"><a href="#" data-description="Add/remove custom permissions and assign them to users."><span>Permissions</span></a></div>
+            <div class="icon users"><a href="#" data-description="Manage user who can access the Administrative area."><span>Users</span></a></div>
+            <div class="icon settings"><a href="#" data-description="General settings for the Administrative area. You can here manage the Admin area language, desktop background, manage localStorage information and other settings. Use wisely, as it can ruin the the UIX. Be careful. Lorem ipsum dolor sit amet."><span>Settings</span></a></div>
+            <div class="icon themes"><a href="#" data-description="Manage frontend themes."><span>Themes</span></a></div>
+        </div>
+      </div>
+    </section>
+    <footer class="statusbar gap2">
+      <div class="size box w220 innerbevel-inverse-light">7 items</div>
+      <div class="description box grow3 innerbevel-inverse-light"></div>
+      <div class="status box w220 innerbevel-inverse-light">
+      </div>
+    </footer>
+  </div>
+
+  <div id="window-settings" class="window outerbevel w750" draggable="true">
+    <header>
+      <h3 class="settings">Settings</h3>
+      <div class="buttons">
+        <button class="minimize"><span>minimize</span></button>
+        <button class="maximize" disabled="disabled"><span>maximize</span></button>
+        <button class="close"><span>close</span></button>
+      </div>
+    </header>
+    <section>
+      <div class="panel">
+        <div class="box grow1 p5">
+          <fieldset class="w-max rows">
+            <legend>General</legend>
+            <div class="box m5">
+              <input class="" type="checkbox" name="terminate" id="terminate" /><label for="terminate" class="postlabel">Terminate explorer</label>
+            </div>
+            <div class="box m5">
+              <input type="checkbox" name="compatible" id="compatible" /><label for="compatible" class="postlabel">Compatible mode</label>
+            </div>
+            <div class="box m5">
+              <input type="checkbox" name="dark-mode" id="dark-mode" /><label for="dark-mode" class="postlabel">Use dark mode</label>
+            </div>
+            <div class="box m5">
+              <input type="checkbox" name="idle" id="idle" /><label for="idle" class="postlabel">Automatically logout after 10 minutes of idle</label>
+            </div>
+          </fieldset>
+
+        </div>
+        <div class="box grow1 p10">
+          <div class="innerbevel-inverse p10 w-max">
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <script type="application/javascript" src="assets/script/main.js"></script>
+</body>
+</html>

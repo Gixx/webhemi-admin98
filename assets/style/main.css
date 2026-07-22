@@ -1,0 +1,731 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  position: relative;
+  cursor: default;
+  margin: 0;
+}
+
+@font-face {
+  font-family: "system-ui";
+  src: url("../fonts/WebHemi Sans Serif.woff") format('woff');
+}
+
+@font-face {
+  font-family: "window-ui";
+  src: url("../fonts/WebHemi Fixedsys.woff") format('woff');
+}
+
+html {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-size: 62.5%;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: "system-ui", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-style: normal;
+  font-variant-ligatures: no-common-ligatures;
+  font-feature-settings: "kern", "liga" 0, "clig" 0;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+button {
+  /* @apply .outerbevel */
+  border-top: 0.1rem solid #c6c3c6;
+  border-right: 0.1rem solid #000000;
+  border-bottom: 0.1rem solid #000000;
+  border-left: 0.1rem solid #c6c3c6;
+  background-image:
+    linear-gradient(to right, #ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(to left, #848284 0.1rem, transparent 0.1rem),
+    linear-gradient(#ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(to top, #848284 0.1rem, transparent 0.1rem);
+}
+
+button:not([disabled]).is-pressed,
+button:not([disabled]):active:hover,
+button:not([disabled]):focus-visible:active {
+  /* @apply .innerbevel */
+  border-top: 0.1rem solid #000000;
+  border-right: 0.1rem solid #c6c3c6;
+  border-bottom: 0.1rem solid #c6c3c6;
+  border-left: 0.1rem solid #000000;
+  background-image:
+    linear-gradient(to right, #848284 0.1rem, transparent 0.1rem),
+    linear-gradient(to left, #ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(#848284 0.1rem, transparent 0.1rem),
+    linear-gradient(to top, #ffffff 0.1rem, transparent 0.1rem);
+}
+
+
+*:focus {
+  outline: none;
+}
+
+p {
+  font-size: 1.4rem;
+}
+
+button:not([disabled]):active > span,
+button:not([disabled]):focus > span {
+  outline: 0.1rem dotted #000000;
+}
+
+label {
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+
+label:not(.postlabel)::after {
+  content: ':';
+}
+
+label.postlabel {
+  margin-left: 1rem;
+}
+
+legend {
+  font-size: 1.3rem;
+  padding: 0 0.5rem;
+}
+
+*[accesskey]:not(button)::first-letter,
+*[accesskey]:not(a)::first-letter,
+button[accesskey] > span::first-letter {
+  text-decoration: underline;
+}
+
+input:not([type="radio"]),
+input:not([type="checkbox"]) {
+  font-size: 1.1rem;
+  line-height: 1.4rem;
+  padding: 0.1rem 0.5rem;
+}
+
+.m5 {
+  margin: 0.5rem;
+}
+
+.p10 {
+  padding: 1rem;
+}
+
+.outerbevel {
+  border-top: 0.1rem solid #c6c3c6;
+  border-right: 0.1rem solid #000000;
+  border-bottom: 0.1rem solid #000000;
+  border-left: 0.1rem solid #c6c3c6;
+  background-image:
+    linear-gradient(to right, #ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(to left, #848284 0.1rem, transparent 0.1rem),
+    linear-gradient(#ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(to top, #848284 0.1rem, transparent 0.1rem);
+}
+
+.innerbevel {
+  border-top: 0.1rem solid #000000;
+  border-right: 0.1rem solid #c6c3c6;
+  border-bottom: 0.1rem solid #c6c3c6;
+  border-left: 0.1rem solid #000000;
+  background-image:
+    linear-gradient(to right, #848284 0.1rem, transparent 0.1rem),
+    linear-gradient(to left, #ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(#848284 0.1rem, transparent 0.1rem),
+    linear-gradient(to top, #ffffff 0.1rem, transparent 0.1rem);
+}
+
+.innerbevel-inverse {
+  border-top: 0.1rem solid #848284;
+  border-right: 0.1rem solid #ffffff;
+  border-bottom: 0.1rem solid #ffffff;
+  border-left: 0.1rem solid #848284;
+  background-image:
+    linear-gradient(to right, #000000 0.1rem, transparent 0.1rem),
+    linear-gradient(to left, #c6c3c6 0.1rem, transparent 0.1rem),
+    linear-gradient(#000000 0.1rem, transparent 0.1rem),
+    linear-gradient(to top, #c6c3c6 0.1rem, transparent 0.1rem);
+}
+
+.innerbevel-inverse-light {
+  border-top: 0.1rem solid #848284;
+  border-right: 0.1rem solid #ffffff;
+  border-bottom: 0.1rem solid #ffffff;
+  border-left: 0.1rem solid #848284;
+}
+
+.dashboard {
+  position: relative;
+  background-color: #008284;
+  padding: 2rem;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.icon-list {
+  /* Keep static so absolute icons position against .dashboard */
+  position: static;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.box-icon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding: 2rem;
+}
+
+.window {
+  background-color: #c6c3c6;
+  padding: 0.2rem;
+  z-index: 1;
+
+  /* @apply .outerbevel */
+  border-top: 0.1rem solid #c6c3c6;
+  border-right: 0.1rem solid #000000;
+  border-bottom: 0.1rem solid #000000;
+  border-left: 0.1rem solid #c6c3c6;
+  background-image:
+    linear-gradient(to right, #ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(to left, #848284 0.1rem, transparent 0.1rem),
+    linear-gradient(#ffffff 0.1rem, transparent 0.1rem),
+    linear-gradient(to top, #848284 0.1rem, transparent 0.1rem);
+}
+
+.window.resizable {
+  min-width: 50rem;
+  min-height: 34rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.resizable > header,
+.window.resizable > footer {
+  flex: 0 0 auto;
+}
+
+.window.resizable > section {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* Scroll on section: the panel height follows content, columns stretch equally. */
+.window.resizable > section > .panel {
+  align-items: stretch;
+}
+
+.window.resizable.is-sized > section > .panel {
+  min-height: 100%;
+}
+
+/* Beat .mh500 once the window has an explicit height. */
+.window.resizable.is-sized > section > .panel.mh500 {
+  min-height: 100%;
+}
+
+.window-resize-handle {
+  position: absolute;
+  z-index: 20;
+  background: transparent;
+}
+
+.window-resize-handle[data-edge="e"],
+.window-resize-handle[data-edge="w"] {
+  top: 0;
+  bottom: 0;
+  width: 0.6rem;
+  cursor: ew-resize;
+}
+
+.window-resize-handle[data-edge="e"] {
+  right: 0;
+}
+
+.window-resize-handle[data-edge="w"] {
+  left: 0;
+}
+
+.window-resize-handle[data-edge="s"] {
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 0;
+  height: 0.6rem;
+  cursor: ns-resize;
+}
+
+.window-resize-handle[data-edge="se"],
+.window-resize-handle[data-edge="sw"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  bottom: 0;
+}
+
+.window-resize-handle[data-edge="se"] {
+  right: 0;
+  cursor: nwse-resize;
+}
+
+.window-resize-handle[data-edge="sw"] {
+  left: 0;
+  cursor: nesw-resize;
+}
+
+.window.is-resizing,
+.window.is-resizing * {
+  cursor: inherit;
+}
+
+html.is-window-resizing,
+html.is-window-resizing * {
+  cursor: inherit !important;
+}
+
+.w175 {
+  width: 17.5rem;
+}
+
+.w220 {
+  width: 22rem;
+}
+
+.w332 {
+  width: 33.2rem;
+}
+
+.w550 {
+  width: 55rem;
+}
+
+.w750 {
+  width: 75rem;
+}
+
+.w1024 {
+  width: 102.4rem;
+}
+
+.w-max {
+  width: 100%;
+}
+
+.mh500 {
+  min-height: 50rem;
+}
+
+.p5 {
+  padding: 0.5rem;
+}
+
+.p10 {
+  padding: 1rem;
+}
+
+.icon {
+  width: 9rem;
+  height: 9rem;
+  z-index: 0;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.dashboard [draggable="true"] {
+  touch-action: none;
+}
+
+.dashboard [draggable="true"].is-dragging {
+  cursor: move;
+}
+
+.dashboard .window[draggable="true"] > header {
+  cursor: move;
+}
+
+.dashboard .icon[draggable="true"] {
+  cursor: move;
+}
+
+.icon > a {
+  display: block;
+  text-align: center;
+  color: #ffffff;
+  width: 9rem;
+  padding-top: 5rem;
+  height: 9rem;
+  text-decoration: none;
+}
+
+.bg-white > .icon > a {
+  color: #000000;
+}
+
+.icon > a > span {
+  display: inline-block;
+  width: 8.8rem;
+  max-height: 3.8rem;
+  line-height: 1.5rem;
+  font-size: 1.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon > a:focus > span {
+  outline: 0.1rem dotted #ffffff;
+}
+
+.bg-white > .icon > a:focus > span {
+  outline: 0.1rem dotted #000000;
+}
+
+.icon.control-panel {
+  background-image: url("../icons/48x48/control_panel.gif");
+}
+
+.icon.site {
+  background-image: url("../icons/48x48/site.gif");
+}
+
+.icon.network-neighborhood {
+  background-image: url("../icons/48x48/network_heighborhood.gif");
+}
+
+.icon.users {
+  background-image: url("../icons/48x48/users.gif");
+}
+
+.icon.roles {
+  background-image: url("../icons/48x48/roles.gif");
+}
+
+.icon.permissions {
+  background-image: url("../icons/48x48/permissions.gif");
+}
+
+.icon.hosts {
+  background-image: url("../icons/48x48/hosts.gif");
+}
+
+.icon.sites {
+  background-image: url("../icons/48x48/sites.gif");
+}
+
+.icon.settings {
+  background-image: url("../icons/48x48/settings.gif");
+}
+
+.icon.themes {
+  background-image: url("../icons/48x48/themes.gif");
+}
+
+.window > header {
+  background: linear-gradient(90deg,rgba(128, 128, 128, 1) 0%, rgba(193, 193, 193, 1) 100%);
+  margin:0 0 0.1rem 0;
+  padding:0.1rem 0.3rem;
+  height:2.2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: flex-start;
+  gap: 1rem;
+}
+
+.window.active > header {
+  background: linear-gradient(90deg,rgba(0, 0, 132, 1) 0%, rgba(16, 134, 214, 1) 100%);
+}
+
+.window > header > h3 {
+  margin: 0;
+  padding: 0 0.3rem;
+  font-family: "system-ui", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 2rem;
+  letter-spacing: 0.1rem;
+  flex-grow: 4;
+  height: 2rem;
+  color: #ffffff;
+}
+
+.window > header > h3.control-panel {
+  padding-left: 2rem;
+  background-repeat: no-repeat;
+  background-image: url("../icons/16x16/control_panel.gif");
+  background-position: left center;
+}
+
+.window > header > h3.settings {
+  padding-left: 2rem;
+  background-repeat: no-repeat;
+  background-image: url("../icons/16x16/settings.gif");
+  background-position: left center;
+}
+
+.window > header > .buttons {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.window > header > .buttons > button {
+  width: 1.8rem;
+  height: 1.6rem;
+  margin: 0.2rem 0 0.2rem 0.4rem;
+  padding: 0.2rem;
+  background-color: #c6c3c6 !important;
+  background-position: center center;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+
+.window > header > .buttons > button > span {
+  display: block;
+  width: 1.2rem;
+  overflow: hidden;
+  height: 0;
+  padding-top: 1.2rem;
+  background-size: 1.2rem;
+  background-position: 0 0;
+}
+
+.window > header > .buttons > button.help > span {
+  background-image: url("../icons/buttons/button-help.gif");
+  cursor: help;
+}
+
+.window > header > .buttons > button[disabled].help > span {
+  background-image: url("../icons/buttons/button-help-disabled.gif");
+}
+
+.window > header > .buttons > button.close > span {
+  background-image: url("../icons/buttons/button-close.gif");
+}
+
+.window > header > .buttons > button[disabled].close > span {
+  background-image: url("../icons/buttons/button-close-disabled.gif");
+}
+
+.window > header > .buttons > button.maximize > span {
+  background-image: url("../icons/buttons/button-maximize.gif");
+}
+
+.window > header > .buttons > button[disabled].maximize > span {
+  background-image: url("../icons/buttons/button-maximize-disabled.gif");
+}
+
+.window > header > .buttons > button.minimize > span {
+  background-image: url("../icons/buttons/button-minimize.gif");
+}
+
+.window > header > .buttons > button[disabled].minimize > span {
+  background-image: url("../icons/buttons/button-minimize-disabled.gif");
+}
+
+.window > header > .buttons > button.restore > span {
+  background-image: url("../icons/buttons/button-restore.gif");
+}
+
+.window > header > .buttons > button[disabled].restore > span {
+  background-image: url("../icons/buttons/button-restore-disabled.gif");
+}
+
+.window > footer {
+  margin: 0.2rem 0 0.1rem 0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.window > footer.statusbar > .box {
+  min-height: 2rem;
+  padding: 0.1rem 0.3rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  display: block;
+}
+
+.window > footer.statusbar > .box.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  height: 2rem;
+}
+
+.window > section > .panel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0;
+}
+
+.window > section > .panel.panel-bottom {
+  border-bottom: 0.1rem solid #868a8e;
+}
+
+.window > section >  .panel.panel-top {
+  border-top: 0.1rem solid #ffffff;
+}
+
+.box {
+  display: flex;
+}
+
+.rows {
+  flex-direction: column !important;
+}
+
+.box.center {
+  justify-content: center;
+}
+
+.box.right {
+  justify-content: right;
+}
+
+.gap2 {
+  gap: 0.2rem;
+}
+
+.gap5 {
+  gap: 0.5rem;
+}
+
+.gap10 {
+  gap: 1rem;
+}
+
+.box.box-button-list {
+  padding: 1.2rem;
+}
+
+.box-button-list > button {
+  padding: 0.4rem;
+  background-color: #c6c3c6 !important;
+  background-position: center center;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+
+.box.box-button-list > button > span {
+  display: block;
+  width: 6.3rem;
+  height: 1.2rem;
+  font-size: 1.1rem;
+  line-height: 1.2rem;
+  text-align: center;
+}
+
+.box.box-button-list > button.ellipsis > span::after {
+  content: '…';
+}
+.box.box-button-list > button.next > span::after {
+  content: ' >';
+}
+
+.box.box-button-list > button.previous > span::before {
+  content: '< ';
+}
+
+.box.bg-white {
+  background-color: #ffffff;
+}
+
+.box.bg-heaven {
+  background: linear-gradient(182deg,rgba(16, 134, 214, 0.4) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.box.box-info {
+  padding: 1.7rem 1.1rem;
+}
+
+.grow1 {
+  flex-grow: 1;
+}
+
+.grow2 {
+  flex-grow: 2;
+}
+
+.grow3 {
+  flex-grow: 3;
+}
+
+.grow4 {
+  flex-grow: 4;
+}
+
+.box > h4 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.6rem;
+}
+
+.box > p {
+  font-size: 1.3rem;
+  margin-bottom: 1.6rem;
+}
+
+
+.box.feature > img,
+.box.feature > h1,
+.box.feature > hr,
+.box.feature > p {
+  display: block;
+}
+
+.box.feature.unselected > img,
+.box.feature.unselected > h1,
+.box.feature.unselected > hr,
+.box.feature.unselected > p {
+  display: none;
+}
+
+.box.feature {
+  flex-direction: column;
+  padding: 1.5rem;
+  min-width: 20rem;
+}
+
+.box.feature > .feature-icon {
+  width: 4.8rem;
+  height: 4.8rem;
+}
+
+.box.feature > .feature-title {
+  font-size: 2.8rem;
+  font-weight: bolder;
+  margin: 1rem 0;
+  min-width: 11rem;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.box.feature > .feature-separator {
+  margin: 1rem 0 2.5rem 0;
+  border: 0;
+  border-top: 0.1rem solid #5a94c6;
+}
+
+.box.feature > .feature-description {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
