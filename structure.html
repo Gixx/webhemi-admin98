@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Window pane layout structure</title>
+</head>
+<body>
+    <!-- window definition: can be fixed height, width, can be draggable and/or resizable -->
+    <div id="custom-window-id" class="window resizable" draggable="true">
+        <!-- w98 header mandatory -->
+        <div class="title-bar">
+            <div class="title-bar-text">A Helpful Bar</div>
+            <div class="title-bar-controls">
+                <button aria-label="Help"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+
+        <!-- w98 body - mandatory -->
+        <div class="window-body">
+
+            <!-- icon panel layout:
+                * 2 panels side by side,
+                * 1st fixed width (.panel.info),
+                * 2nd grows (.panel.icon-list),
+                * status-bar is mandatory by convention
+            -->
+            <div class="window-pane icon-panel-layout field-border scrollable">
+                <div class="panel info"><!-- text on blue-to-white gradient --></div>
+                <div class="panel icon-list"><!-- icons --></div>
+            </div>
+
+            <!-- wizard panel layout:
+                * 2 panels side-by-side (both with negative top and outer side margin),
+                * 1 panel under them
+                * all panels have Win98 grooves:
+                    border-top: 1px solid #ffffff;
+                    border-bottom: 1px solid #868a8e;
+                  except the first (bottom only) and last (top only)
+            -->
+            <div class="window-pane wizard-panel-layout">
+                <div class="panel banner"><!-- graphic --></div>
+                <div class="panel info"><!-- text on white --></div>
+                <div class="panel actions">
+                    <div class="field-row justify-end"><!-- buttons --></div>
+                </div>
+            </div>
+
+            <!-- heading panel layout:
+                * 2 or more panels in column,
+                * the 1st is with negative margins on top and on the sides
+                * same Win98 grooves as wizard (first bottom only, last top only)
+            -->
+            <div class="window-pane heading-panel-layout">
+                <div class="panel"><!-- graphic --></div>
+                <div class="panel">
+                    <!-- fieldsets, .field-row elements or any html markup -->
+                    <!-- be careful with 98.css's tab panels: it contains .window nested:
+                       <menu role="tablist">
+                        <li role="tab" aria-selected="true"><a href="#tabs">Desktop</a></li>
+                        <li role="tab"><a href="#tabs">My computer</a></li>
+                        <li role="tab"><a href="#tabs">Control panel</a></li>
+                        <li role="tab"><a href="#tabs">Devices manager</a></li>
+                        <li role="tab"><a href="#tabs">Hardware profiles</a></li>
+                        <li role="tab"><a href="#tabs">Performance</a></li>
+                      </menu>
+                      <div class="window" role="tabpanel">
+                        <div class="window-body">
+                          <p>the tab content</p>
+                        </div>
+                      </div>
+                      Shell JS only treats body.dashboard > .window as top-level windows.
+                     -->
+                </div>
+                <div class="panel actions">
+                    <div class="field-row justify-end"><!-- buttons --></div>
+                </div>
+            </div>
+
+            <!-- dialog panel layout: compact column (login / alert / message) -->
+            <div class="window-pane dialog-panel-layout">
+                <div class="panel banner"><!-- alert icon or banner --></div>
+                <div class="panel"><!-- message / form --></div>
+                <div class="panel actions">
+                    <div class="field-row justify-end"><!-- ok button --></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- w98 footer - optional (required by convention for icon-panel-layout) -->
+        <div class="status-bar">
+            <p class="status-bar-field">Press F1 for help</p>
+            <p class="status-bar-field description">Slide 1</p>
+            <p class="status-bar-field">CPU Usage: 14%</p>
+        </div>
+
+    </div>
+</body>
+</html>

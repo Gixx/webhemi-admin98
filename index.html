@@ -19,24 +19,32 @@
       <div class="title-bar-text">Enter Password</div>
     </div>
     <div class="window-body">
-      <img class="login-banner stretched" src="assets/upload/2026-07-18/login-banner.gif" alt="" />
-      <div class="disable-pwd-mgr">
-        <input name="disable-pwd-mgr-1" type="password" id="disable-pwd-mgr-1" style="display: none;" value="disable-pwd-mgr-1" />
-        <input name="disable-pwd-mgr-2" type="password" id="disable-pwd-mgr-2" style="display: none;" value="disable-pwd-mgr-2" />
-        <input name="disable-pwd-mgr-3" type="password" id="disable-pwd-mgr-3" style="display: none;" value="disable-pwd-mgr-3" />
-      </div>
-      <div class="field-row">
-        <label for="username" accesskey="u"><u>U</u>ser name:</label>
-        <input type="text" name="username" id="username" class="w220" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" />
-      </div>
-      <div class="field-row">
-        <label for="password" accesskey="p"><u>P</u>assword:</label>
-        <input type="password" name="password" id="password" class="w220" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" />
-      </div>
-      <div class="field-row login-actions">
-        <button type="button" accesskey="o" class="default"><u>O</u>K</button>
-        <button type="button" disabled accesskey="c"><u>C</u>ancel</button>
-        <button type="button" accesskey="s"><u>S</u>hutdown...</button>
+      <div class="window-pane dialog-panel-layout">
+        <div class="panel banner">
+          <img class="login-banner" src="assets/upload/2026-07-18/login-banner.gif" alt="" />
+        </div>
+        <div class="panel">
+          <div class="disable-pwd-mgr">
+            <input name="disable-pwd-mgr-1" type="password" id="disable-pwd-mgr-1" style="display: none;" value="disable-pwd-mgr-1" />
+            <input name="disable-pwd-mgr-2" type="password" id="disable-pwd-mgr-2" style="display: none;" value="disable-pwd-mgr-2" />
+            <input name="disable-pwd-mgr-3" type="password" id="disable-pwd-mgr-3" style="display: none;" value="disable-pwd-mgr-3" />
+          </div>
+          <div class="field-row">
+            <label for="username" accesskey="u"><u>U</u>ser name:</label>
+            <input type="text" name="username" id="username" class="w220" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" />
+          </div>
+          <div class="field-row">
+            <label for="password" accesskey="p"><u>P</u>assword:</label>
+            <input type="password" name="password" id="password" class="w220" autocomplete="off" data-1p-ignore data-lpignore="true" data-protonpass-ignore="true" />
+          </div>
+        </div>
+        <div class="panel actions">
+          <div class="field-row justify-end">
+            <button type="button" accesskey="o" class="default"><u>O</u>K</button>
+            <button type="button" disabled accesskey="c"><u>C</u>ancel</button>
+            <button type="button" accesskey="s"><u>S</u>hutdown...</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -46,11 +54,11 @@
       <div class="title-bar-text">Windows NT Workstation Setup</div>
     </div>
     <div class="window-body">
-      <div class="wizard-layout stretched">
-        <div class="wizard-banner">
+      <div class="window-pane wizard-panel-layout">
+        <div class="panel banner">
           <img src="assets/upload/2026-07-18/setup-wizard.gif" alt="" />
         </div>
-        <div class="wizard-info">
+        <div class="panel info">
           <h4>Welcome to the Windows NT 5.0 Setup Wizard</h4>
           <p>
             This wizard installs Windows NT 5.0 Workstation on your computer. The wizard will need to gather some
@@ -64,10 +72,12 @@
             Click Next to continue with Setup.
           </p>
         </div>
-      </div>
-      <div class="field-row wizard-actions">
-        <button type="button" disabled>&lt; Back</button>
-        <button type="button">Next &gt;</button>
+        <div class="panel actions">
+          <div class="field-row justify-end">
+            <button type="button" disabled>&lt; Back</button>
+            <button type="button">Next &gt;</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -82,14 +92,14 @@
       </div>
     </div>
     <div class="window-body">
-      <div class="window-pane control-panel-layout sunken-panel scrollable bg-white">
-        <div class="feature unselected">
-          <img class="feature-icon" src="assets/icons/48x48/users.gif" alt="Users" />
-          <h1 class="feature-title" lang="en">Users</h1>
-          <hr class="feature-separator" />
-          <p class="feature-description">Manage user who can access the WebHemi CMS.</p>
+      <div class="window-pane icon-panel-layout field-border scrollable">
+        <div class="panel info unselected">
+          <img class="info-icon" src="assets/icons/48x48/users.gif" alt="Users" />
+          <h1 class="info-title" lang="en">Users</h1>
+          <hr class="info-separator" />
+          <p class="info-description">Manage user who can access the WebHemi CMS.</p>
         </div>
-        <div class="box-icon-list">
+        <div class="panel icon-list">
           <div class="icon sites"><a href="#" data-description="Manage sites and their contents."><span>Sites</span></a></div>
           <div class="icon hosts"><a href="#" data-description="Add, remove and verify domains and assign them to sites"><span>Hosts</span></a></div>
           <div class="icon roles"><a href="#" data-description="Add/remove custom roles or view the built-in ones."><span>Roles</span></a></div>
@@ -101,9 +111,9 @@
       </div>
     </div>
     <div class="status-bar">
-      <p class="status-bar-field size">7 items</p>
+      <p class="status-bar-field">7 items</p>
       <p class="status-bar-field description"></p>
-      <p class="status-bar-field status"></p>
+      <p class="status-bar-field"></p>
     </div>
   </div>
 
@@ -117,63 +127,67 @@
       </div>
     </div>
     <div class="window-body">
-      <div class="columns">
-        <div class="stack">
-          <fieldset>
-            <legend>General</legend>
-            <div class="field-row">
-              <input type="checkbox" name="terminate" id="terminate" />
-              <label for="terminate">Terminate explorer</label>
-            </div>
-            <div class="field-row">
-              <input type="checkbox" name="compatible" id="compatible" disabled />
-              <label for="compatible">Compatible mode</label>
-            </div>
-            <div class="field-row">
-              <input type="checkbox" name="dark-mode" id="dark-mode" disabled checked />
-              <label for="dark-mode">Use dark mode</label>
-            </div>
-            <div class="field-row">
-              <input type="checkbox" name="idle" id="idle" checked />
-              <label for="idle">Automatically logout after 10 minutes of idle</label>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>COMCTL32</legend>
-            <div class="field-column">
-              <div class="field-row">
-                <input type="radio" name="comctl32" id="ser581" checked />
-                <label for="ser581">5.81 Series</label>
+      <div class="window-pane">
+        <div class="panel">
+          <div class="columns">
+            <div class="stack">
+              <fieldset>
+                <legend>General</legend>
+                <div class="field-row">
+                  <input type="checkbox" name="terminate" id="terminate" />
+                  <label for="terminate">Terminate explorer</label>
+                </div>
+                <div class="field-row">
+                  <input type="checkbox" name="compatible" id="compatible" disabled />
+                  <label for="compatible">Compatible mode</label>
+                </div>
+                <div class="field-row">
+                  <input type="checkbox" name="dark-mode" id="dark-mode" disabled checked />
+                  <label for="dark-mode">Use dark mode</label>
+                </div>
+                <div class="field-row">
+                  <input type="checkbox" name="idle" id="idle" checked />
+                  <label for="idle">Automatically logout after 10 minutes of idle</label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>COMCTL32</legend>
+                <div class="field-column">
+                  <div class="field-row">
+                    <input type="radio" name="comctl32" id="ser581" checked />
+                    <label for="ser581">5.81 Series</label>
+                  </div>
+                  <div class="field-row">
+                    <input type="radio" name="comctl32" id="ser582" />
+                    <label for="ser582">5.82 Series</label>
+                  </div>
+                  <div class="field-row">
+                    <input type="radio" name="comctl32" id="serdef" />
+                    <label for="serdef">Default</label>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="field-row justify-end">
+                <button type="button">Execute</button>
+                <button type="button">Cancel</button>
               </div>
-              <div class="field-row">
-                <input type="radio" name="comctl32" id="ser582" />
-                <label for="ser582">5.82 Series</label>
-              </div>
-              <div class="field-row">
-                <input type="radio" name="comctl32" id="serdef" />
-                <label for="serdef">Default</label>
-              </div>
             </div>
-          </fieldset>
-          <div class="field-row justify-end">
-            <button type="button">Execute</button>
-            <button type="button">Cancel</button>
+            <div class="sunken-panel scrollable">
+              <p>Lorem ipsum dolor sit amet.</p>
+              <p>
+                Extra lines so the custom scrollbar can be exercised when the panel is short.
+                Windows 98 scrollbars used arrow buttons, a checkerboard track, and a raised thumb.
+              </p>
+              <p>
+                The native browser scrollbar is hidden; assets/script/scrollbar.js paints the Win98 chrome
+                and keeps it in sync with scrollTop / scrollLeft.
+              </p>
+              <p>
+                Resize the window or add more content later — MutationObserver and ResizeObserver refresh
+                the thumb size automatically.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="sunken-panel scrollable">
-          <p>Lorem ipsum dolor sit amet.</p>
-          <p>
-            Extra lines so the custom scrollbar can be exercised when the panel is short.
-            Windows 98 scrollbars used arrow buttons, a checkerboard track, and a raised thumb.
-          </p>
-          <p>
-            The native browser scrollbar is hidden; assets/script/scrollbar.js paints the Win98 chrome
-            and keeps it in sync with scrollTop / scrollLeft.
-          </p>
-          <p>
-            Resize the window or add more content later — MutationObserver and ResizeObserver refresh
-            the thumb size automatically.
-          </p>
         </div>
       </div>
     </div>

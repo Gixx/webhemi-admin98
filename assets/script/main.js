@@ -34,10 +34,25 @@ if (isFirefox) {
     return;
   }
 
-  /** Icons snap to a grid: origin 2rem, step 9rem (icon size). */
-  const ICON_GRID_ORIGIN_REM = 2;
-  const ICON_GRID_STEP_REM = 9;
-  const POSITIONS_STORAGE_KEY = 'webhemi.demo.desktop.positions';
+  /** Top-level shell windows only (ignore nested 98.css tabpanel .window). */
+  const shellWindows = () =>
+    [...dashboard.children].filter((el) => el.classList.contains('window'));
+
+  const closestShellWindow = (start) => {
+    let node = start;
+    while (node && node !== dashboard) {
+      if (node.classList?.contains('window') && node.parentElement === dashboard) {
+        return node;
+      }
+      node = node.parentElement;
+    }
+    return null;
+  };
+
+  /** Icons snap to a grid: origin 20px, step 90px (icon size). */
+  const ICON_GRID_ORIGIN_PX = 20;
+  const ICON_GRID_STEP_PX = 90;
+  const POSITIONS_STORAGE_KEY = 'webhemi.demo.desktop.positions.px';
 
   let zCounter = 10;
   let dragState = null;
@@ -47,20 +62,15 @@ if (isFirefox) {
   /** No top-edge resize: header drag must stay uncontested. */
   const RESIZE_EDGES = ['e', 'w', 's', 'se', 'sw'];
 
-  const remToPx = (value) =>
-    value * Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const toPx = (value) => `${Number(value.toFixed(2))}px`;
 
-  const pxToRem = (value) =>
-    `${Number((value / Number.parseFloat(getComputedStyle(document.documentElement).fontSize)).toFixed(4))}rem`;
-
-  const pxToRemNumber = (value) =>
-    Number((value / Number.parseFloat(getComputedStyle(document.documentElement).fontSize)).toFixed(4));
+  const toPxNumber = (value) => Number(value.toFixed(2));
 
   const dashboardRect = () => dashboard.getBoundingClientRect();
 
   const setPosition = (el, left, top) => {
-    el.style.left = pxToRem(left);
-    el.style.top = pxToRem(top);
+    el.style.left = toPx(left);
+    el.style.top = toPx(top);
   };
 
   const readPosition = (el) => {
@@ -97,8 +107,8 @@ if (isFirefox) {
 
       const pos = readPosition(el);
       data[id] = {
-        left: pxToRemNumber(pos.left),
-        top: pxToRemNumber(pos.top),
+        left: toPxNumber(pos.left),
+        top: toPxNumber(pos.top),
       };
 
       if (el.classList.contains('window')) {
@@ -131,11 +141,11 @@ if (isFirefox) {
           }
         } else {
           if (el.style.width) {
-            data[id].width = pxToRemNumber(el.offsetWidth);
+            data[id].width = toPxNumber(el.offsetWidth);
           }
 
           if (el.style.height) {
-            data[id].height = pxToRemNumber(el.offsetHeight);
+            data[id].height = toPxNumber(el.offsetHeight);
           }
         }
       }
@@ -177,8 +187,8 @@ if (isFirefox) {
     const nextWidth = Math.max(minWidth, width);
     const nextHeight = Math.max(minHeight, height);
 
-    el.style.width = pxToRem(nextWidth);
-    el.style.height = pxToRem(nextHeight);
+    el.style.width = toPx(nextWidth);
+    el.style.height = toPx(nextHeight);
     el.classList.add('is-sized');
 
     return { width: nextWidth, height: nextHeight };
@@ -329,8 +339,8 @@ if (isFirefox) {
   };
 
   const clampToIconGrid = (el, left, top) => {
-    const origin = remToPx(ICON_GRID_ORIGIN_REM);
-    const step = remToPx(ICON_GRID_STEP_REM);
+    const origin = ICON_GRID_ORIGIN_PX;
+    const step = ICON_GRID_STEP_PX;
     const maxLeft = Math.max(origin, dashboard.clientWidth - el.offsetWidth);
     const maxTop = Math.max(origin, dashboard.clientHeight - el.offsetHeight);
     const maxCol = Math.max(0, Math.floor((maxLeft - origin) / step));
@@ -383,8 +393,8 @@ if (isFirefox) {
       return preferred;
     }
 
-    const origin = remToPx(ICON_GRID_ORIGIN_REM);
-    const step = remToPx(ICON_GRID_STEP_REM);
+    const origin = ICON_GRID_ORIGIN_PX;
+    const step = ICON_GRID_STEP_PX;
     const maxLeft = Math.max(origin, dashboard.clientWidth - el.offsetWidth);
     const maxTop = Math.max(origin, dashboard.clientHeight - el.offsetHeight);
     const maxCol = Math.max(0, Math.floor((maxLeft - origin) / step));
@@ -438,7 +448,7 @@ if (isFirefox) {
 
   /** 98.css uses .title-bar.inactive; shell keeps .window.active (inverted). */
   const syncTitleBarInactive = () => {
-    dashboard.querySelectorAll('.window').forEach((win) => {
+    shellWindows().forEach((win) => {
       const titleBar = win.querySelector(':scope > .title-bar');
       if (!titleBar) {
         return;
@@ -450,7 +460,7 @@ if (isFirefox) {
 
   const syncMaximizeButton = (win) => {
     const button = win.querySelector(
-      '.title-bar-controls button[aria-label="Maximize"], .title-bar-controls button[aria-label="Restore"]',
+      ':scope > .title-bar .title-bar-controls button[aria-label="Maximize"], :scope > .title-bar .title-bar-controls button[aria-label="Restore"]',
     );
     if (!button || button.disabled) {
       return;
@@ -467,7 +477,7 @@ if (isFirefox) {
       return;
     }
 
-    dashboard.querySelectorAll('.window.active').forEach((el) => {
+    shellWindows().forEach((el) => {
       el.classList.remove('active');
     });
     win.classList.add('active');
@@ -478,7 +488,7 @@ if (isFirefox) {
   };
 
   const clearWindowActive = () => {
-    dashboard.querySelectorAll('.window.active').forEach((el) => {
+    shellWindows().forEach((el) => {
       el.classList.remove('active');
     });
     syncTitleBarInactive();
@@ -486,7 +496,7 @@ if (isFirefox) {
   };
 
   const activateTopVisibleWindow = () => {
-    const visible = [...dashboard.querySelectorAll('.window')].filter(isWindowVisible);
+    const visible = shellWindows().filter(isWindowVisible);
     if (!visible.length) {
       clearWindowActive();
       return;
@@ -526,10 +536,10 @@ if (isFirefox) {
     }
 
     const pos = readPosition(win);
-    win.dataset.restoreLeft = String(pxToRemNumber(pos.left));
-    win.dataset.restoreTop = String(pxToRemNumber(pos.top));
-    win.dataset.restoreWidth = win.style.width ? String(pxToRemNumber(win.offsetWidth)) : '';
-    win.dataset.restoreHeight = win.style.height ? String(pxToRemNumber(win.offsetHeight)) : '';
+    win.dataset.restoreLeft = String(toPxNumber(pos.left));
+    win.dataset.restoreTop = String(toPxNumber(pos.top));
+    win.dataset.restoreWidth = win.style.width ? String(toPxNumber(win.offsetWidth)) : '';
+    win.dataset.restoreHeight = win.style.height ? String(toPxNumber(win.offsetHeight)) : '';
 
     setPosition(win, 0, 0);
     applyWindowSize(win, dashboard.clientWidth, dashboard.clientHeight);
@@ -543,15 +553,15 @@ if (isFirefox) {
       return;
     }
 
-    const left = remToPx(Number.parseFloat(win.dataset.restoreLeft));
-    const top = remToPx(Number.parseFloat(win.dataset.restoreTop));
+    const left = Number.parseFloat(win.dataset.restoreLeft);
+    const top = Number.parseFloat(win.dataset.restoreTop);
     const width = Number.parseFloat(win.dataset.restoreWidth);
     const height = Number.parseFloat(win.dataset.restoreHeight);
 
     win.classList.remove('is-maximized');
 
     if (Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0) {
-      applyWindowSize(win, remToPx(width), remToPx(height));
+      applyWindowSize(win, width, height);
     } else {
       win.style.width = '';
       win.style.height = '';
@@ -588,7 +598,7 @@ if (isFirefox) {
   const placeAbsolute = () => {
     const origin = dashboardRect();
     const saved = loadPositions();
-    const cascadeStep = remToPx(3);
+    const cascadeStep = 30;
     let windowCascade = 0;
     const items = [...dashboard.querySelectorAll('[draggable="true"]')].map((el) => {
       const r = el.getBoundingClientRect();
@@ -604,7 +614,7 @@ if (isFirefox) {
     const firstWindow = items.find(({ el }) => el.classList.contains('window'));
     const cascadeOrigin = firstWindow
       ? { left: firstWindow.left, top: firstWindow.top }
-      : { left: remToPx(2), top: remToPx(2) };
+      : { left: 20, top: 20 };
 
     let activeWindow = null;
 
@@ -616,7 +626,7 @@ if (isFirefox) {
 
       if (el.classList.contains('icon')) {
         if (savedPos && Number.isFinite(savedPos.left) && Number.isFinite(savedPos.top)) {
-          const restored = clampToIconGrid(el, remToPx(savedPos.left), remToPx(savedPos.top));
+          const restored = clampToIconGrid(el, savedPos.left, savedPos.top);
           nextLeft = restored.left;
           nextTop = restored.top;
         } else {
@@ -626,7 +636,7 @@ if (isFirefox) {
         }
       } else if (el.classList.contains('window')) {
         if (savedPos && Number.isFinite(savedPos.left) && Number.isFinite(savedPos.top)) {
-          const restored = clamp(el, remToPx(savedPos.left), remToPx(savedPos.top));
+          const restored = clamp(el, savedPos.left, savedPos.top);
           nextLeft = restored.left;
           nextTop = restored.top;
         } else {
@@ -659,7 +669,7 @@ if (isFirefox) {
             Number.isFinite(savedPos.height) &&
             !savedPos.maximized
           ) {
-            applyWindowSize(el, remToPx(savedPos.width), remToPx(savedPos.height));
+            applyWindowSize(el, savedPos.width, savedPos.height);
             const sized = clamp(el, nextLeft, nextTop);
             nextLeft = sized.left;
             nextTop = sized.top;
@@ -677,10 +687,10 @@ if (isFirefox) {
 
         if (savedPos?.maximized && el.classList.contains('resizable')) {
           el.dataset.restoreLeft = String(
-            Number.isFinite(savedPos.left) ? savedPos.left : pxToRemNumber(nextLeft),
+            Number.isFinite(savedPos.left) ? savedPos.left : toPxNumber(nextLeft),
           );
           el.dataset.restoreTop = String(
-            Number.isFinite(savedPos.top) ? savedPos.top : pxToRemNumber(nextTop),
+            Number.isFinite(savedPos.top) ? savedPos.top : toPxNumber(nextTop),
           );
           el.dataset.restoreWidth = Number.isFinite(savedPos.width) ? String(savedPos.width) : '';
           el.dataset.restoreHeight = Number.isFinite(savedPos.height)
@@ -717,7 +727,7 @@ if (isFirefox) {
       );
       syncTitleBarInactive();
     } else {
-      const fallbackActive = [...dashboard.querySelectorAll('.window.active')].find(isWindowVisible);
+      const fallbackActive = shellWindows().find((el) => el.classList.contains('active') && isWindowVisible(el));
       if (fallbackActive) {
         bringWindowToFront(fallbackActive);
       } else {
@@ -856,16 +866,16 @@ if (isFirefox) {
 
     const resizeHandle = event.target.closest('.window-resize-handle');
     if (resizeHandle) {
-      const win = resizeHandle.closest('.window.resizable');
-      if (win && dashboard.contains(win)) {
+      const win = closestShellWindow(resizeHandle);
+      if (win && win.classList.contains('resizable')) {
         bringWindowToFront(win);
         startResize(win, resizeHandle.dataset.edge, event);
       }
       return;
     }
 
-    const win = event.target.closest('.window');
-    if (win && dashboard.contains(win)) {
+    const win = closestShellWindow(event.target);
+    if (win) {
       if (isWindowVisible(win)) {
         bringWindowToFront(win);
       }
@@ -920,7 +930,7 @@ if (isFirefox) {
   dashboard.addEventListener('click', (event) => {
     const control = event.target.closest('.title-bar-controls button');
     if (control && dashboard.contains(control) && !control.disabled) {
-      const win = control.closest('.window');
+      const win = closestShellWindow(control);
       if (!win) {
         return;
       }
@@ -962,7 +972,7 @@ if (isFirefox) {
   }
 })();
 
-/** Feature panel + statusbar updates for icons inside .box-icon-list */
+/** Info panel + statusbar updates for icons inside .panel.icon-list */
 (() => {
   const backgroundImageUrl = (el) => {
     const background = getComputedStyle(el).backgroundImage;
@@ -972,10 +982,11 @@ if (isFirefox) {
   };
 
   const selectIcon = (link) => {
+    const layout = link.closest('.icon-panel-layout');
     const win = link.closest('.window');
     const icon = link.closest('.icon');
 
-    if (!win || !icon || !link.closest('.box-icon-list')) {
+    if (!layout || !win || !icon || !link.closest('.panel.icon-list')) {
       return;
     }
 
@@ -983,29 +994,29 @@ if (isFirefox) {
     const description = link.getAttribute('data-description') ?? '';
     const imageUrl = backgroundImageUrl(icon);
 
-    const feature = win.querySelector('.feature');
-    if (feature) {
-      const featureIcon = feature.querySelector('img.feature-icon');
-      const featureTitle = feature.querySelector('h1.feature-title');
-      const featureDescription = feature.querySelector('p.feature-description');
+    const info = layout.querySelector(':scope > .panel.info, :scope > .scrollable-viewport > .panel.info');
+    if (info) {
+      const infoIcon = info.querySelector('img.info-icon');
+      const infoTitle = info.querySelector('h1.info-title');
+      const infoDescription = info.querySelector('p.info-description');
 
-      if (featureIcon && imageUrl) {
-        featureIcon.src = imageUrl;
-        featureIcon.alt = title;
+      if (infoIcon && imageUrl) {
+        infoIcon.src = imageUrl;
+        infoIcon.alt = title;
       }
 
-      if (featureTitle) {
-        featureTitle.textContent = title;
+      if (infoTitle) {
+        infoTitle.textContent = title;
       }
 
-      if (featureDescription) {
-        featureDescription.textContent = description;
+      if (infoDescription) {
+        infoDescription.textContent = description;
       }
 
-      feature.classList.remove('unselected');
+      info.classList.remove('unselected');
     }
 
-    const statusDescription = win.querySelector('.status-bar .status-bar-field.description');
+    const statusDescription = win.querySelector(':scope > .status-bar .status-bar-field.description');
     if (statusDescription) {
       statusDescription.textContent = description;
     }
@@ -1016,51 +1027,51 @@ if (isFirefox) {
       return;
     }
 
-    win.querySelectorAll('.box-icon-list .icon a:focus').forEach((link) => {
+    win.querySelectorAll('.panel.icon-list .icon a:focus').forEach((link) => {
       link.blur();
     });
 
-    win.querySelectorAll('.feature').forEach((feature) => {
-      feature.classList.add('unselected');
+    win.querySelectorAll('.icon-panel-layout .panel.info').forEach((info) => {
+      info.classList.add('unselected');
     });
 
-    win.querySelectorAll('.status-bar .status-bar-field.description').forEach((description) => {
+    win.querySelectorAll(':scope > .status-bar .status-bar-field.description').forEach((description) => {
       description.textContent = '';
     });
   };
 
   const unselectAllIcons = (exceptWindow = null) => {
-    document.querySelectorAll('.window').forEach((win) => {
+    document.querySelectorAll('.dashboard > .window').forEach((win) => {
       if (exceptWindow && win === exceptWindow) {
         return;
       }
 
-      if (win.querySelector('.box-icon-list')) {
+      if (win.querySelector('.panel.icon-list')) {
         unselectIcons(win);
       }
     });
   };
 
   const selectBoxIconLink = (link) => {
-    unselectAllIcons(link.closest('.window'));
+    unselectAllIcons(link.closest('.dashboard > .window') || link.closest('.window'));
     selectIcon(link);
   };
 
   document.addEventListener('focusin', (event) => {
-    const boxLink = event.target.closest?.('.box-icon-list .icon a');
+    const boxLink = event.target.closest?.('.panel.icon-list .icon a');
     if (boxLink) {
       selectBoxIconLink(boxLink);
       return;
     }
 
-    // Another icon selection (desktop) clears Control Panel feature selection.
-    if (event.target.closest?.('.icon-list .icon a')) {
+    // Desktop icon selection clears in-window info panel selection.
+    if (event.target.closest?.('.dashboard > .icon-list .icon a')) {
       unselectAllIcons();
     }
   });
 
   document.addEventListener('click', (event) => {
-    const boxLink = event.target.closest?.('.box-icon-list .icon a');
+    const boxLink = event.target.closest?.('.panel.icon-list .icon a');
     if (boxLink) {
       event.preventDefault();
       boxLink.focus();
@@ -1068,7 +1079,7 @@ if (isFirefox) {
       return;
     }
 
-    if (event.target.closest?.('.icon-list .icon a')) {
+    if (event.target.closest?.('.dashboard > .icon-list .icon a')) {
       unselectAllIcons();
     }
   });
