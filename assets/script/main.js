@@ -34,14 +34,18 @@ if (isFirefox) {
     return;
   }
 
-  /** Top-level shell windows only (ignore nested 98.css tabpanel .window). */
-  const shellWindows = () =>
-    [...dashboard.children].filter((el) => el.classList.contains('window'));
+  /** Top-level shell windows only (ignore nested 98.css tabpanel .window and #toolbar). */
+  const isShellWindow = (el) =>
+    el instanceof HTMLElement &&
+    el.classList.contains('window') &&
+    el.id !== 'toolbar';
+
+  const shellWindows = () => [...dashboard.children].filter(isShellWindow);
 
   const closestShellWindow = (start) => {
     let node = start;
     while (node && node !== dashboard) {
-      if (node.classList?.contains('window') && node.parentElement === dashboard) {
+      if (isShellWindow(node) && node.parentElement === dashboard) {
         return node;
       }
       node = node.parentElement;
@@ -472,6 +476,24 @@ if (isFirefox) {
   const isWindowVisible = (win) =>
     !win.classList.contains('is-closed') && !win.classList.contains('is-minimized');
 
+  /** Fixed taskbar buttons: visibility + pressed state track shell windows. */
+  const syncTaskButtons = () => {
+    document.querySelectorAll('#toolbar .task-buttons > .task[data-window]').forEach((btn) => {
+      const win = document.getElementById(btn.getAttribute('data-window'));
+      if (!win || !isShellWindow(win)) {
+        btn.hidden = true;
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+        return;
+      }
+
+      btn.hidden = win.classList.contains('is-closed');
+      const pressed = win.classList.contains('active') && isWindowVisible(win);
+      btn.classList.toggle('active', pressed);
+      btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    });
+  };
+
   const bringWindowToFront = (win) => {
     if (!isWindowVisible(win)) {
       return;
@@ -482,6 +504,7 @@ if (isFirefox) {
     });
     win.classList.add('active');
     syncTitleBarInactive();
+    syncTaskButtons();
     zCounter += 1;
     win.style.zIndex = String(zCounter);
     savePositions();
@@ -492,6 +515,7 @@ if (isFirefox) {
       el.classList.remove('active');
     });
     syncTitleBarInactive();
+    syncTaskButtons();
     savePositions();
   };
 
@@ -518,6 +542,7 @@ if (isFirefox) {
     win.classList.add('is-closed');
     win.classList.remove('is-minimized', 'active');
     syncTitleBarInactive();
+    syncTaskButtons();
     activateTopVisibleWindow();
     savePositions();
   };
@@ -526,6 +551,7 @@ if (isFirefox) {
     win.classList.add('is-minimized');
     win.classList.remove('active');
     syncTitleBarInactive();
+    syncTaskButtons();
     activateTopVisibleWindow();
     savePositions();
   };
@@ -588,7 +614,7 @@ if (isFirefox) {
 
   const openWindowById = (id) => {
     const win = document.getElementById(id);
-    if (!win || !win.classList.contains('window') || !dashboard.contains(win)) {
+    if (!win || !isShellWindow(win) || !dashboard.contains(win)) {
       return;
     }
 
@@ -734,6 +760,8 @@ if (isFirefox) {
         syncTitleBarInactive();
       }
     }
+
+    syncTaskButtons();
   };
 
   const DRAG_THRESHOLD_PX = 4;
@@ -897,6 +925,11 @@ if (isFirefox) {
       return;
     }
 
+    // Taskbar is not a shell window; keep window focus when using it.
+    if (event.target.closest('#toolbar')) {
+      return;
+    }
+
     clearWindowActive();
 
     const icon = event.target.closest('.icon[draggable="true"]');
@@ -947,6 +980,23 @@ if (isFirefox) {
       }
 
       return;
+    }
+
+    const taskButton = event.target.closest('#toolbar .task-buttons > .task[data-window]');
+    if (taskButton && !taskButton.hidden) {
+      const win = document.getElementById(taskButton.getAttribute('data-window'));
+      if (!win || !isShellWindow(win) || win.classList.contains('is-closed')) {
+        return;
+      }
+
+      event.preventDefault();
+
+      // Classic taskbar: active button toggles minimize; otherwise restore/activate.
+      if (win.classList.contains('active') && isWindowVisible(win)) {
+        minimizeWindow(win);
+      } else {
+        showWindow(win);
+      }
     }
   });
 
@@ -1083,4 +1133,25 @@ if (isFirefox) {
       unselectAllIcons();
     }
   });
+})();
+
+/** Taskbar clock (24-hour HH:MM). */
+(() => {
+  const clock = document.querySelector('#toolbar .clock');
+  if (!clock) {
+    return;
+  }
+
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  const tick = () => {
+    clock.textContent = formatTime(new Date());
+  };
+
+  tick();
+  window.setInterval(tick, 1000);
 })();
