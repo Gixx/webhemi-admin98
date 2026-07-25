@@ -1,0 +1,45 @@
+// Bevel mixins — shared raised/sunken language for chrome atoms.
+// Prefer CSS variables from abstract/tokens.css so theme swaps stay in one place.
+
+@mixin bevel-raised {
+  box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+@mixin bevel-sunken {
+  box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+}
+
+@mixin bevel-window {
+  box-shadow: var(--border-window-outer), var(--border-window-inner);
+}
+
+@mixin bevel-field {
+  box-shadow: var(--border-field);
+}
+
+@mixin bevel-status-field {
+  box-shadow: var(--border-status-field);
+}
+
+@mixin bevel-tab {
+  box-shadow: var(--border-tab);
+}
+
+@mixin bevel-default-button-raised {
+  box-shadow: var(--default-button-border-raised-outer), var(--default-button-border-raised-inner);
+}
+
+@mixin bevel-default-button-sunken {
+  box-shadow: var(--default-button-border-sunken-outer), var(--default-button-border-sunken-inner);
+}
+
+// Combined face: raised chrome on a silver surface (typical .window / button).
+@mixin face-raised($background: var(--surface)) {
+  background: $background;
+  @include bevel-raised;
+}
+
+@mixin face-sunken($background: var(--button-highlight)) {
+  background: $background;
+  @include bevel-sunken;
+}

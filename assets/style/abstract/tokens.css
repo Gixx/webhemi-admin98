@@ -1,0 +1,91 @@
+/*
+ * Shared design tokens for chrome atoms + product (WebHemi / Win98).
+ * Loaded after npm 98.css so these :root values become the source of truth
+ * during the chrome port; remove 98.css once atoms consume only these vars.
+ */
+
+:root {
+  /* Color */
+  --text-color: #222222;
+  --surface: #c0c0c0;
+  --button-highlight: #ffffff;
+  --button-face: #dfdfdf;
+  --button-shadow: #808080;
+  --window-frame: #0a0a0a;
+  --dialog-blue: #000080;
+  --dialog-blue-light: #1084d0;
+  --dialog-gray: #808080;
+  --dialog-gray-light: #b5b5b5;
+  --link-blue: #0000ff;
+  --desktop: #008284;
+
+  /* Typography */
+  --font-chrome: "WebHemi Sans Serif", "Segoe UI", Tahoma, sans-serif;
+  --font-size-chrome: 12px;
+
+  /* Spacing */
+  --element-spacing: 8px;
+  --grouped-button-spacing: 4px;
+  --grouped-element-spacing: 6px;
+  --radio-width: 12px;
+  --checkbox-width: 13px;
+  --radio-label-spacing: 6px;
+  --range-track-height: 4px;
+  --range-spacing: 10px;
+
+  /* Radio / checkbox layout math (from 98.css) */
+  --radio-total-width-precalc: var(--radio-width) + var(--radio-label-spacing);
+  --radio-total-width: calc(var(--radio-total-width-precalc));
+  --radio-left: calc(-1 * var(--radio-total-width-precalc));
+  --radio-dot-width: 4px;
+  --radio-dot-top: calc(var(--radio-width) / 2 - var(--radio-dot-width) / 2);
+  --radio-dot-left: calc(
+    -1 * (var(--radio-total-width-precalc)) + var(--radio-width) / 2 - var(--radio-dot-width) / 2
+  );
+
+  --checkbox-total-width-precalc: var(--checkbox-width) + var(--radio-label-spacing);
+  --checkbox-total-width: calc(var(--checkbox-total-width-precalc));
+  --checkbox-left: calc(-1 * var(--checkbox-total-width-precalc));
+  --checkmark-width: 7px;
+  --checkmark-left: 3px;
+
+  /* Border width unit */
+  --border-width: 1px;
+
+  /* Raised / sunken / field / window / tab bevels (box-shadow recipes) */
+  --border-raised-outer: inset -1px -1px var(--window-frame), inset 1px 1px var(--button-highlight);
+  --border-raised-inner: inset -2px -2px var(--button-shadow), inset 2px 2px var(--button-face);
+  --border-sunken-outer: inset -1px -1px var(--button-highlight), inset 1px 1px var(--window-frame);
+  --border-sunken-inner: inset -2px -2px var(--button-face), inset 2px 2px var(--button-shadow);
+
+  --default-button-border-raised-outer: inset -2px -2px var(--window-frame),
+    inset 1px 1px var(--window-frame);
+  --default-button-border-raised-inner: inset 2px 2px var(--button-highlight),
+    inset -3px -3px var(--button-shadow), inset 3px 3px var(--button-face);
+  --default-button-border-sunken-outer: inset 2px 2px var(--window-frame),
+    inset -1px -1px var(--window-frame);
+  --default-button-border-sunken-inner: inset -2px -2px var(--button-highlight),
+    inset 3px 3px var(--button-shadow), inset -3px -3px var(--button-face);
+
+  --border-window-outer: inset -1px -1px var(--window-frame), inset 1px 1px var(--button-face);
+  --border-window-inner: inset -2px -2px var(--button-shadow), inset 2px 2px var(--button-highlight);
+
+  --border-field: inset -1px -1px var(--button-highlight), inset 1px 1px var(--button-shadow),
+    inset -2px -2px var(--button-face), inset 2px 2px var(--window-frame);
+  --border-status-field: inset -1px -1px var(--button-face), inset 1px 1px var(--button-shadow);
+
+  --border-tab: inset -1px 0 var(--window-frame), inset 1px 1px var(--button-face),
+    inset -2px 0 var(--button-shadow), inset 2px 2px var(--button-highlight);
+
+  /* Demo window size scale (also exposed via Tailwind @theme in main.css) */
+  --width-window-2xs: 175px;
+  --width-window-xs: 220px;
+  --width-window-sm: 332px;
+  --width-window-md: 550px;
+  --width-window-lg: 750px;
+  --width-window-xl: 1024px;
+  --max-height-window-sm: 240px;
+  --max-height-window-md: 250px;
+  --max-height-window-lg: 500px;
+  --min-height-window-md: 500px;
+}

@@ -6,7 +6,7 @@ todos:
     status: completed
   - id: "tokens-theme"
     content: "Define Win98/WebHemi design tokens in @theme + SCSS variables"
-    status: pending
+    status: completed
   - id: "chrome-atoms"
     content: "Port full 98.css surface into SCSS atoms (buttons, window, forms, tabs, tree, progress, …)"
     status: pending
@@ -28,7 +28,8 @@ isProject: true
 
 ## Progress
 
-- **Step 1 (done):** Vite + Tailwind v4 + Sass scaffold. Entry is [`assets/style/main.css`](assets/style/main.css) (`@import "tailwindcss"` → `98.css` → [`product.scss`](assets/style/product.scss)). `npm run dev` / `build` / `preview`. `cssMinify: false` until 98.css is dropped (`@media (not(hover))` breaks lightningcss minify).
+- **Step 1 (done):** Vite + Tailwind v4 + Sass scaffold. Entry is [`assets/style/main.css`](assets/style/main.css) (Tailwind theme+utilities → `98.css` → tokens → [`product.scss`](assets/style/product.scss)). `npm run dev` / `build` / `preview`. `cssMinify: false` until 98.css is dropped (`@media (not(hover))` breaks lightningcss minify). Preflight omitted so 98.css chrome is not reset.
+- **Step 2 (done):** Design tokens in [`assets/style/abstract/tokens.css`](assets/style/abstract/tokens.css) (`:root`, after 98.css so we own the vars). Tailwind `@theme` bridge in `main.css` (colors, `font-webhemi`, window size scale). Bevel mixins in [`assets/style/abstract/_bevel.scss`](assets/style/abstract/_bevel.scss) for the chrome port. Note: tokens are plain CSS — importing SCSS partials from the `.css` entry mangled `//` comments and dropped `:root`.
 
 ## Decisions (confirmed)
 
@@ -119,10 +120,11 @@ Source of truth while porting: [node_modules/98.css/style.css](node_modules/98.c
 
 ```
 assets/style/
-  main.scss
+  main.css                # Tailwind @theme + import chain
   abstract/
-    _tokens.scss          # @theme + CSS/SCSS variables
+    tokens.css            # :root design tokens (plain CSS; loaded from main.css)
     _bevel.scss           # raised / sunken / field border mixins
+    _index.scss           # @forward bevel (for chrome @use)
   chrome/                 # full former-98.css surface
     _typography.scss
     _button.scss

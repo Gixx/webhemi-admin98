@@ -1,5 +1,5 @@
 /*
- * Vite style entry: Tailwind v4 → 98.css (temporary) → product SCSS.
+ * Vite style entry: Tailwind v4 → 98.css (temporary) → owned tokens → product SCSS.
  * Owned chrome atoms will replace the 98.css import in a later step.
  *
  * Skip Tailwind Preflight — it resets borders/padding/fonts and fights 98.css.
@@ -9,5 +9,41 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+/* Tailwind theme bridge (utilities: bg-desktop, w-window-lg, font-webhemi, …) */
+@theme {
+  --color-desktop: #008284;
+  --color-surface: #c0c0c0;
+  --color-button-face: #dfdfdf;
+  --color-button-highlight: #ffffff;
+  --color-button-shadow: #808080;
+  --color-window-frame: #0a0a0a;
+  --color-navy: #000080;
+  --color-navy-light: #1084d0;
+  --color-window-text: #222222;
+  --color-link: #0000ff;
+
+  --font-webhemi: "WebHemi Sans Serif", "Segoe UI", Tahoma, sans-serif;
+
+  --spacing-element: 8px;
+  --spacing-grouped-button: 4px;
+  --spacing-grouped-element: 6px;
+
+  --width-window-2xs: 175px;
+  --width-window-xs: 220px;
+  --width-window-sm: 332px;
+  --width-window-md: 550px;
+  --width-window-lg: 750px;
+  --width-window-xl: 1024px;
+
+  --max-height-window-sm: 240px;
+  --max-height-window-md: 250px;
+  --max-height-window-lg: 500px;
+  --min-height-window-md: 500px;
+}
+
 @import "98.css/dist/98.css";
+
+/* Own :root tokens (override 98.css variables; chrome port will rely on these). */
+@import "./abstract/tokens.css";
+
 @import "./product.scss";
