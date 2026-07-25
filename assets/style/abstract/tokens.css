@@ -1,7 +1,6 @@
 /*
  * Shared design tokens for chrome atoms + product (WebHemi / Win98).
- * Loaded after npm 98.css so these :root values become the source of truth
- * during the chrome port; remove 98.css once atoms consume only these vars.
+ * Source of truth for :root vars consumed by owned chrome SCSS.
  */
 
 :root {

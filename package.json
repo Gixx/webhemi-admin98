@@ -10,9 +10,6 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "98.css": "0.1.21"
-  },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "sass": "^1.102.0",

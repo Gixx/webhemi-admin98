@@ -12,7 +12,7 @@ todos:
     status: completed
   - id: "drop-98css"
     content: "Remove npm 98.css dependency once visual/markup parity is verified"
-    status: pending
+    status: completed
   - id: "split-product"
     content: "Move product CSS (desktop, toolbar, layouts, scrollbar) into SCSS partials on top of chrome"
     status: pending
@@ -31,6 +31,7 @@ isProject: true
 - **Step 1 (done):** Vite + Tailwind v4 + Sass scaffold. Entry is [`assets/style/main.css`](assets/style/main.css) (Tailwind theme+utilities → tokens). `npm run dev` / `build` / `preview`. `cssMinify: false` while `@media (not (hover))` remains (lightningcss minify). Preflight omitted so Win98 chrome is not reset.
 - **Step 2 (done):** Design tokens in [`assets/style/abstract/tokens.css`](assets/style/abstract/tokens.css) (`:root`). Tailwind `@theme` bridge in `main.css`. Bevel mixins in [`assets/style/abstract/_bevel.scss`](assets/style/abstract/_bevel.scss). Tokens are plain CSS — SCSS partials from the `.css` entry mangled `//` comments.
 - **Step 3 (done):** Full 98.css surface ported into [`assets/style/chrome/`](assets/style/chrome/) partials + icons; entry [`chrome.scss`](assets/style/chrome.scss). Pipeline cut over — npm `98.css` no longer imported. Chrome + product load from [`assets/script/main.js`](assets/script/main.js) (`import` order: chrome → product) because Tailwind’s CSS `@import` resolver does not run Sass on nested SCSS. WebHemi font via `--font-chrome`. Sass-safe media: `@media (not (hover))`. Button/window use bevel mixins.
+- **Step 4 (done):** Removed npm `98.css` from `package.json` / lockfile. Attribution remains in chrome headers + [`assets/style/chrome/README.md`](assets/style/chrome/README.md). Catalog page [`98.css.html`](98.css.html) still compares against our chrome.
 
 ## Decisions (confirmed)
 

@@ -41,7 +41,7 @@ body.dashboard {
   scroll-behavior: smooth;
 }
 
-/* Override 98.css Pixelated MS Sans Serif on chrome/controls. */
+/* Chrome control font (WebHemi); size tuned vs classic 11px pixel face. */
 .title-bar,
 .window,
 button,
@@ -170,7 +170,7 @@ ul.tree-view {
   background-image: url("../icons/48x48/themes.gif");
 }
 
-/* --- Window shell (positioning / resize; chrome from 98.css) --- */
+/* --- Window shell (positioning / resize; visual chrome from assets/style/chrome) --- */
 
 .window {
   z-index: 1;

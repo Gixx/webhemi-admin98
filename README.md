@@ -22,7 +22,7 @@ npm run preview  # serve the production build
 
 ## Status
 
-Early concept. Shell UX: title-bar Close/Minimize/Maximize, double-click icons to open windows (`data-open-window`), positions persisted in localStorage, taskbar with Start menu and clock. Custom scrollbars for `.scrollable` hosts (`assets/script/scrollbar.js`).
+Early concept. Shell UX: title-bar Close/Minimize/Maximize, double-click icons to open windows (`data-open-window`), positions persisted in localStorage, taskbar with Start menu and clock. Custom scrollbars for `.scrollable` hosts (`assets/script/scrollbar.js`). Win98 chrome is owned SCSS (no npm `98.css` dependency); use `98.css.html` with `npm run dev` as a component catalog.
 
 ## License
 
