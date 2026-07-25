@@ -15,7 +15,7 @@ todos:
     status: completed
   - id: "split-product"
     content: "Move product CSS (desktop, toolbar, layouts, scrollbar) into SCSS partials on top of chrome"
-    status: pending
+    status: completed
   - id: "theme-utils"
     content: "Migrate demo utilities (w*/mxh*/justify*) to Tailwind theme keys"
     status: pending
@@ -32,6 +32,7 @@ isProject: true
 - **Step 2 (done):** Design tokens in [`assets/style/abstract/tokens.css`](assets/style/abstract/tokens.css) (`:root`). Tailwind `@theme` bridge in `main.css`. Bevel mixins in [`assets/style/abstract/_bevel.scss`](assets/style/abstract/_bevel.scss). Tokens are plain CSS — SCSS partials from the `.css` entry mangled `//` comments.
 - **Step 3 (done):** Full 98.css surface ported into [`assets/style/chrome/`](assets/style/chrome/) partials + icons; entry [`chrome.scss`](assets/style/chrome.scss). Pipeline cut over — npm `98.css` no longer imported. Chrome + product load from [`assets/script/main.js`](assets/script/main.js) (`import` order: chrome → product) because Tailwind’s CSS `@import` resolver does not run Sass on nested SCSS. WebHemi font via `--font-chrome`. Sass-safe media: `@media (not (hover))`. Button/window use bevel mixins.
 - **Step 4 (done):** Removed npm `98.css` from `package.json` / lockfile. Attribution remains in chrome headers + [`assets/style/chrome/README.md`](assets/style/chrome/README.md). Catalog page [`98.css.html`](98.css.html) still compares against our chrome.
+- **Step 5 (done):** Product CSS split into [`assets/style/product/`](assets/style/product/) partials (`_base`, `_desktop`, `_toolbar`, `_window`, `_layouts`, `_primitives`, `_scrollbar`); barrel [`product.scss`](assets/style/product.scss) `@use`s them (still imported from `main.js` after chrome).
 
 ## Decisions (confirmed)
 
@@ -124,13 +125,13 @@ Source of truth while porting: [node_modules/98.css/style.css](node_modules/98.c
 assets/style/
   main.css                # Tailwind @theme + tokens only
   chrome.scss             # @use all chrome partials (imported from main.js)
-  product.scss            # product shell (imported from main.js after chrome)
+  product.scss            # @use all product partials (imported from main.js after chrome)
   abstract/
     tokens.css            # :root design tokens (plain CSS; loaded from main.css)
     _bevel.scss           # raised / sunken / field border mixins
     _index.scss           # @forward bevel (for chrome @use)
   chrome/                 # full former-98.css surface
-    icon/                 # SVG assets from 98.css (MIT)
+    icon/                 # SVG assets (98.css MIT + WebHemi button-*-disabled)
     _typography.scss
     _button.scss
     _window.scss
@@ -143,6 +144,15 @@ assets/style/
     _slider.scss
     _scrollbar.scss
     _code.scss
+  product/
+    _index.scss           # @use all product (optional barrel)
+    _base.scss            # html/body.dashboard shell, WebHemi @font-face
+    _desktop.scss         # desktop icons
+    _toolbar.scss         # taskbar / Start menu / clock
+    _window.scss          # positioning, resize, bounded, shell bits
+    _layouts.scss         # icon/wizard/heading/dialog-panel-layout
+    _primitives.scss      # columns, stack, field-column, size/justify utils
+    _scrollbar.scss       # custom Win98 scrollbar (JS-coupled)
 ```
 
 Entry: Tailwind+tokens (`main.css`) → chrome → product (via `main.js` imports).

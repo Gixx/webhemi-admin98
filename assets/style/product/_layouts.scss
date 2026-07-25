@@ -1,0 +1,233 @@
+/* Product: window-pane layouts (icon / wizard / heading / dialog). */
+
+/* --- Window pane layouts --- */
+
+/*
+ * Win98 groove separators between stacked / wizard panels.
+ * First: bottom only; last: top only; middle: both.
+ */
+.wizard-panel-layout > .panel,
+.heading-panel-layout > .panel {
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #868a8e;
+}
+
+.wizard-panel-layout > .panel:first-child,
+.heading-panel-layout > .panel:first-child {
+  border-top: 0;
+}
+
+.wizard-panel-layout > .panel:last-child,
+.heading-panel-layout > .panel:last-child {
+  border-bottom: 0;
+}
+
+/* icon-panel-layout: info (fixed) + icon-list (grow); status-bar by convention */
+.icon-panel-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 0;
+}
+
+/* Flex lives on the viewport after scrollbar.js wraps children. */
+.icon-panel-layout.has-custom-scrollbar {
+  display: grid;
+}
+
+.icon-panel-layout > .panel.info,
+.icon-panel-layout > .scrollable-viewport > .panel.info {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 175px;
+  min-width: 180px;
+  max-width: 220px;
+  padding: 12px 14px;
+  background: linear-gradient(182deg, rgba(16, 134, 214, 0.4) 0%, #fff 100%);
+  border-right: 1px solid #dfdfdf;
+}
+
+.icon-panel-layout > .panel.info > img,
+.icon-panel-layout > .panel.info > h1,
+.icon-panel-layout > .panel.info > hr,
+.icon-panel-layout > .panel.info > p,
+.icon-panel-layout > .scrollable-viewport > .panel.info > img,
+.icon-panel-layout > .scrollable-viewport > .panel.info > h1,
+.icon-panel-layout > .scrollable-viewport > .panel.info > hr,
+.icon-panel-layout > .scrollable-viewport > .panel.info > p {
+  display: block;
+}
+
+.icon-panel-layout > .panel.info.unselected > img,
+.icon-panel-layout > .panel.info.unselected > h1,
+.icon-panel-layout > .panel.info.unselected > hr,
+.icon-panel-layout > .panel.info.unselected > p,
+.icon-panel-layout > .scrollable-viewport > .panel.info.unselected > img,
+.icon-panel-layout > .scrollable-viewport > .panel.info.unselected > h1,
+.icon-panel-layout > .scrollable-viewport > .panel.info.unselected > hr,
+.icon-panel-layout > .scrollable-viewport > .panel.info.unselected > p {
+  display: none;
+}
+
+.icon-panel-layout .panel.info > .info-icon {
+  width: 48px;
+  height: 48px;
+}
+
+.icon-panel-layout .panel.info > .info-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 8px 0;
+  min-width: 110px;
+  color: #000080;
+  word-break: break-word;
+  line-break: anywhere;
+}
+
+.icon-panel-layout .panel.info > .info-separator {
+  margin: 8px 0 16px 0;
+  border: 0;
+  border-top: 1px solid #5a94c6;
+}
+
+.icon-panel-layout .panel.info > .info-description {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.icon-panel-layout > .panel.icon-list,
+.icon-panel-layout > .scrollable-viewport > .panel.icon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex: 1 1 auto;
+  padding: 12px;
+  background: #fff;
+}
+
+.disable-pwd-mgr {
+  display: none;
+}
+
+/* wizard-panel-layout: banner | info, actions full width below; bleeds into body margin */
+.wizard-panel-layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "banner info"
+    ". actions";
+  margin-top: -7px;
+  margin-right: -8px;
+  margin-left: -8px;
+  width: calc(100% + 16px);
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.wizard-panel-layout > .panel.banner {
+  grid-column: 1;
+  grid-row: 1;
+  background: #000080;
+}
+
+.wizard-panel-layout > .panel.banner img {
+  display: block;
+}
+
+.wizard-panel-layout > .panel.info {
+  grid-column: 2;
+  grid-row: 1;
+  background: #fff;
+  padding: 16px 14px;
+}
+
+.wizard-panel-layout > .panel.info h4 {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+.wizard-panel-layout > .panel.info p {
+  font-size: 11px;
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+
+.wizard-panel-layout > .panel.info p:last-child {
+  margin-bottom: 0;
+}
+
+.wizard-panel-layout > .panel.actions {
+  grid-column: 2;
+  grid-row: 2;
+  padding: 10px 8px 0 8px;
+}
+
+.wizard-panel-layout > .panel.actions > .field-row {
+  gap: 8px;
+}
+
+.wizard-panel-layout > .panel.actions > .field-row > * + * {
+  margin-left: 0;
+}
+
+/* heading-panel-layout: column; first panel bleeds */
+.heading-panel-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.heading-panel-layout > .panel:first-child {
+  margin-top: -7px;
+  margin-right: -8px;
+  margin-left: -8px;
+  width: calc(100% + 16px);
+  max-width: none;
+  box-sizing: border-box;
+}
+
+/* dialog-panel-layout: compact column (login / alert / message) */
+.dialog-panel-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.dialog-panel-layout > .panel.banner {
+  margin-top: -7px;
+  margin-right: -8px;
+  margin-left: -8px;
+  width: calc(100% + 16px);
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.dialog-panel-layout > .panel.banner .login-banner,
+.dialog-panel-layout > .panel.banner > img {
+  display: block;
+  width: 100%;
+}
+
+.dialog-panel-layout > .panel:not(.banner):not(.actions) {
+  padding-top: 10px;
+}
+
+.dialog-panel-layout > .panel .field-row label {
+  min-width: 75px;
+}
+
+.dialog-panel-layout > .panel .field-row input[type="text"],
+.dialog-panel-layout > .panel .field-row input[type="password"] {
+  max-width: 220px;
+}
+
+.dialog-panel-layout > .panel.actions {
+  margin-top: 14px;
+}

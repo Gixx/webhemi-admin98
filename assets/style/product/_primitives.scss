@@ -1,0 +1,117 @@
+/* Product: size utilities, columns/stack/field-column, sunken defaults. */
+
+.w175 {
+  width: 175px;
+}
+
+.w220 {
+  width: 220px;
+}
+
+.w332 {
+  width: 332px;
+}
+
+.w550 {
+  width: 550px;
+}
+
+.w750 {
+  width: 750px;
+}
+
+.w1024 {
+  width: 1024px;
+}
+
+.mxh240 {
+  max-height: 240px;
+}
+
+.mxh250 {
+  max-height: 250px;
+}
+
+.mh500 {
+  min-height: 500px;
+}
+
+.mxh500 {
+  max-height: 500px;
+}
+
+/* --- In-panel primitives (dialog / form building blocks) --- */
+
+.columns {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.columns > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Let a scrollable column shrink inside a height-bounded .columns row. */
+.columns > .scrollable {
+  min-height: 0;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+/* Content-sized group boxes; do not stretch to fill the column. */
+.stack > fieldset {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+/*
+ * Horizontal group of .field-row items (radios, checkboxes, etc.).
+ * 98.css .field-row is the label+control pair; this lays those pairs in a row.
+ */
+.field-column {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.field-column > .field-row {
+  margin-top: 0;
+  margin-left: 12px;
+}
+
+.field-column > .field-row > * + * {
+  margin-left: 6px;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+/* 98.css .sunken-panel defaults to white; keep surface gray unless asked. */
+.sunken-panel {
+  background-color: silver;
+}
+
+.bg-white {
+  background-color: #fff;
+}

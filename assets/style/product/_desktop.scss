@@ -1,0 +1,107 @@
+/* Product: desktop icons. */
+
+/* --- Desktop icons --- */
+
+.dashboard > .icon-list {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.icon {
+  width: 90px;
+  height: 90px;
+  z-index: 0;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.dashboard [draggable="true"] {
+  touch-action: none;
+}
+
+.dashboard [draggable="true"].is-dragging {
+  cursor: move;
+}
+
+.icon > a {
+  display: block;
+  text-align: center;
+  color: #ffffff;
+  width: 90px;
+  padding-top: 50px;
+  height: 90px;
+  text-decoration: none;
+}
+
+.panel.icon-list .icon > a {
+  color: #000000;
+}
+
+.icon > a > span {
+  display: inline-block;
+  width: 88px;
+  max-height: 38px;
+  line-height: 15px;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon > a:focus {
+  outline: none !important;
+}
+
+.icon > a:focus > span {
+  outline: 1px dotted #880000;
+  background-color: #000080;
+  color: #ffffff;
+}
+
+/*.panel.icon-list .icon > a:focus > span {*/
+/*  outline: 1px dotted #880000;*/
+/*  background-color: #000080;*/
+/*  color: #ffffff;*/
+/*}*/
+
+.icon.control-panel {
+  background-image: url("../../icons/48x48/control_panel.gif");
+}
+
+.icon.site {
+  background-image: url("../../icons/48x48/site.gif");
+}
+
+.icon.network-neighborhood {
+  background-image: url("../../icons/48x48/network_heighborhood.gif");
+}
+
+.icon.users {
+  background-image: url("../../icons/48x48/users.gif");
+}
+
+.icon.roles {
+  background-image: url("../../icons/48x48/roles.gif");
+}
+
+.icon.permissions {
+  background-image: url("../../icons/48x48/permissions.gif");
+}
+
+.icon.hosts {
+  background-image: url("../../icons/48x48/hosts.gif");
+}
+
+.icon.sites {
+  background-image: url("../../icons/48x48/sites.gif");
+}
+
+.icon.settings {
+  background-image: url("../../icons/48x48/settings.gif");
+}
+
+.icon.themes {
+  background-image: url("../../icons/48x48/themes.gif");
+}

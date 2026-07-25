@@ -1,0 +1,232 @@
+/* Product: custom Win98 scrollbar host (scrollbar.js). */
+
+/*
+ * Custom Win98 scrollbar host (see assets/script/scrollbar.js).
+ * .scrollable becomes a grid shell; .scrollable-viewport is the real overflow box.
+ */
+.scrollable {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.scrollable.has-custom-scrollbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.scrollable.has-custom-scrollbar.sb-show-y {
+  grid-template-columns: minmax(0, 1fr) 16px;
+}
+
+.scrollable.has-custom-scrollbar.sb-show-x {
+  grid-template-rows: minmax(0, 1fr) 17px;
+}
+
+.scrollable-viewport {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  box-sizing: border-box;
+}
+
+.scrollable-viewport::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+.sunken-panel.scrollable .scrollable-viewport {
+  padding: 10px;
+  min-height: 100px;
+}
+
+.icon-panel-layout.has-custom-scrollbar > .scrollable-viewport {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background-color: #fff;
+}
+
+.icon-panel-layout.has-custom-scrollbar.sb-show-y > .scrollable-viewport > .panel.icon-list {
+  padding-right: 12px;
+}
+
+.scrollable > .sb {
+  box-sizing: border-box;
+  user-select: none;
+  z-index: 5;
+}
+
+.scrollable > .sb-y,
+.scrollable > .sb-x,
+.scrollable > .sb-corner {
+  display: none;
+}
+
+.scrollable.sb-show-y > .sb-y {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  width: 16px;
+  background: #dfdfdf;
+}
+
+.scrollable.sb-show-x > .sb-x {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  height: 17px;
+  background: #dfdfdf;
+}
+
+.scrollable.sb-show-y.sb-show-x > .sb-corner {
+  grid-column: 2;
+  grid-row: 2;
+  display: block;
+  width: 16px;
+  height: 17px;
+  background: #dfdfdf;
+}
+
+.scrollable > .sb .sb-btn {
+  flex: 0 0 auto;
+  min-width: 16px;
+  min-height: 17px;
+  width: 16px;
+  height: 17px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: transparent;
+  text-shadow: none;
+  background-color: silver;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px grey,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-y .sb-dec {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8 6H7v1H6v1H5v1H4v1h7V9h-1V8H9V7H8V6z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-y .sb-inc {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11 6H4v1h1v1h1v1h1v1h1V9h1V8h1V7h1V6z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-x .sb-dec {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9 4H8v1H7v1H6v1H5v1h1v1h1v1h1v1h1V4z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-x .sb-inc {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0H0v16h1V1h14V0z' fill='%23DFDFDF'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 1H1v14h1V2h12V1H2z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M16 17H0v-1h15V0h1v17z' fill='%23000'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 1h-1v14H1v1h14V1z' fill='gray'/%3E%3Cpath fill='silver' d='M2 2h12v13H2z'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7 4H6v7h1v-1h1V9h1V8h1V7H9V6H8V5H7V4z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb-y .sb-dec:disabled {
+  background-image: url("../chrome/icon/button-up-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-y .sb-inc:disabled {
+  background-image: url("../chrome/icon/button-down-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-x .sb-dec:disabled {
+  background-image: url("../chrome/icon/button-left-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-x .sb-inc:disabled {
+  background-image: url("../chrome/icon/button-right-disabled.svg");
+  box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #fff,
+    inset -2px -2px #c0c0c0,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-x .sb-btn {
+  height: 17px;
+  width: 16px;
+}
+
+.scrollable > .sb .sb-btn:not(:disabled):active {
+  box-shadow:
+    inset -1px -1px #fff,
+    inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px grey;
+}
+
+.scrollable > .sb .sb-btn:disabled {
+  opacity: 1;
+  filter: none;
+  color: transparent;
+  text-shadow: none;
+}
+
+.scrollable > .sb .sb-track {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  background-color: #dfdfdf;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='2' height='2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1 0H0v1h1v1h1V1H1V0z' fill='silver'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2 0H1v1H0v1h1V1h1V0z' fill='%23fff'/%3E%3C/svg%3E");
+}
+
+.scrollable > .sb .sb-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  background-color: #b5b5b5;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px #808080,
+    inset 2px 2px #dfdfdf;
+}
+
+.scrollable > .sb-y .sb-thumb {
+  width: 100%;
+  min-height: 17px;
+}
+
+.scrollable > .sb-x .sb-thumb {
+  height: 100%;
+  min-width: 17px;
+}
+
+.scrollable-viewport > p:first-child {
+  margin-top: 0;
+}
+
+.scrollable-viewport > p:last-child {
+  margin-bottom: 0;
+}

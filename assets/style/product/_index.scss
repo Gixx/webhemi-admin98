@@ -1,0 +1,8 @@
+// Product layer barrel (same load order as ../product.scss).
+@use "base";
+@use "desktop";
+@use "toolbar";
+@use "window";
+@use "layouts";
+@use "primitives";
+@use "scrollbar";

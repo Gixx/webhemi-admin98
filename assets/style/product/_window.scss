@@ -1,0 +1,204 @@
+/* Product: window positioning, resize, bounded height, shell bits. */
+
+/* --- Window shell (positioning / resize; visual chrome from assets/style/chrome) --- */
+
+.window {
+  z-index: 1;
+}
+
+.window.is-closed,
+.window.is-minimized {
+  display: none !important;
+}
+
+.window.is-maximized > .window-resize-handle {
+  display: none;
+}
+
+.window.resizable {
+  min-width: 500px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.resizable > .title-bar,
+.window.resizable > .status-bar {
+  flex: 0 0 auto;
+}
+
+.window.resizable > .window-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * Scroll host is .window-pane.scrollable (inside sunken / field-border chrome).
+ * Pane fills the body; when content is taller, the custom scrollbar scrolls
+ * the pane panels together.
+ */
+.window.resizable > .window-body > .window-pane {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.window.resizable.is-sized > .window-body > .window-pane.mh500 {
+  min-height: 0;
+}
+
+/* Tighter body when the pane draws its own field border. */
+.window > .window-body:has(> .window-pane.field-border) {
+  margin: 4px;
+  padding: 0;
+}
+
+.window-resize-handle {
+  position: absolute;
+  z-index: 20;
+  background: transparent;
+}
+
+.window-resize-handle[data-edge="e"],
+.window-resize-handle[data-edge="w"] {
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: ew-resize;
+}
+
+.window-resize-handle[data-edge="e"] {
+  right: 0;
+}
+
+.window-resize-handle[data-edge="w"] {
+  left: 0;
+}
+
+.window-resize-handle[data-edge="s"] {
+  left: 6px;
+  right: 6px;
+  bottom: 0;
+  height: 6px;
+  cursor: ns-resize;
+}
+
+.window-resize-handle[data-edge="se"],
+.window-resize-handle[data-edge="sw"] {
+  width: 12px;
+  height: 12px;
+  bottom: 0;
+}
+
+.window-resize-handle[data-edge="se"] {
+  right: 0;
+  cursor: nwse-resize;
+}
+
+.window-resize-handle[data-edge="sw"] {
+  left: 0;
+  cursor: nesw-resize;
+}
+
+.window.is-resizing,
+.window.is-resizing * {
+  cursor: inherit;
+}
+
+html.is-window-resizing,
+html.is-window-resizing * {
+  cursor: inherit !important;
+}
+
+/*
+ * .bounded: height-capped windows need the same flex height chain as
+ * .resizable so nested .scrollable hosts get a definite height and can
+ * overflow (custom scrollbar). Pair with an .mxh* utility.
+ */
+.window.bounded {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.window.bounded > .title-bar,
+.window.bounded > .status-bar {
+  flex: 0 0 auto;
+}
+
+.window.bounded > .window-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.bounded > .window-body > .window-pane {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.bounded > .window-body > .window-pane > .panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.bounded > .window-body > .window-pane > .panel > .columns {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.title-bar-text.control-panel,
+.title-bar-text.settings {
+  padding-left: 22px;
+  background-repeat: no-repeat;
+  background-position: 2px center;
+  background-size: 16px 16px;
+}
+
+.title-bar-text.control-panel {
+  background-image: url("../../icons/48x48/control_panel.gif");
+}
+
+.title-bar-text.settings {
+  background-image: url("../../icons/48x48/settings.gif");
+}
+
+.status-bar .status-bar-field {
+  white-space: nowrap;
+  min-width: 50px;
+  max-width: 34%;
+  flex-grow: 1;
+}
+
+.status-bar .status-bar-field.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 66%;
+}
+
+/*
+ * Bleed content to the window chrome inside .window-body
+ * (98.css uses margin: 8px on .window-body). Prefer layout-encoded bleed;
+ * keep .stretched for one-off cases.
+ */
+.stretched {
+  margin-top: -7px;
+  margin-right: -8px;
+  margin-left: -8px;
+  width: calc(100% + 16px);
+  max-width: none;
+  box-sizing: border-box;
+}

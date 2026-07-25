@@ -1,0 +1,232 @@
+/* Product: taskbar, Start menu, task buttons, clock. */
+
+/*
+ * Taskbar / Start menu host. Fixed to the desktop bottom edge; not a
+ * draggable shell window (see main.js shellWindows filter).
+ */
+#toolbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10000;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#toolbar > .window-body {
+  margin: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+#toolbar button.menu {
+  background-color: silver;
+  background-image: url("../../icons/48x48/menu.gif");
+  background-repeat: no-repeat;
+  background-position: 4px center;
+  background-size: 16px 16px;
+  padding-left: 24px;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+#toolbar button.menu[aria-expanded="true"] {
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+  padding: 1px 11px 0 25px;
+  background-position: 5px 4px;
+}
+
+/* Classic Start menu popup above the Menu button. */
+#toolbar .start-menu {
+  position: absolute;
+  left: 2px;
+  bottom: calc(100% - 2px);
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background: silver;
+  box-shadow:
+    inset -1px -1px #0a0a0a,
+    inset 1px 1px #fff,
+    inset -2px -2px grey,
+    inset 2px 2px #dfdfdf;
+}
+
+#toolbar .start-menu[hidden] {
+  display: none;
+}
+
+#toolbar .start-menu-banner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 24px;
+  padding: 6px 0 8px;
+  box-sizing: border-box;
+  background: linear-gradient(to top, #000080, #000000);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+  user-select: none;
+}
+
+#toolbar .start-menu-banner > span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+#toolbar .start-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 2px;
+  min-width: 200px;
+}
+
+#toolbar .start-menu-list > .separator {
+  height: 0;
+  margin: 3px 2px;
+  border: none;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid #fff;
+}
+
+#toolbar .start-menu-list .start-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  margin: 0;
+  padding: 4px 28px 4px 40px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 4px center;
+  background-size: 32px 32px;
+  color: #222;
+  text-shadow: none;
+}
+
+#toolbar .start-menu-list .start-item:focus {
+  outline: none;
+}
+
+#toolbar .start-menu-list .start-item:hover,
+#toolbar .start-menu-list .start-item:focus-visible,
+#toolbar .start-menu-list .start-item:not(:disabled):active {
+  background-color: navy;
+  box-shadow: none;
+  color: #fff;
+  text-shadow: none;
+}
+
+#toolbar .start-menu-list .start-item.uploads {
+  background-image: url("../../icons/48x48/uploads.gif");
+}
+
+#toolbar .start-menu-list .start-item.control-panel {
+  background-image: url("../../icons/48x48/control_panel.gif");
+}
+
+#toolbar .start-menu-list .start-item.search {
+  background-image: url("../../icons/48x48/search.gif");
+}
+
+#toolbar .start-menu-list .start-item.logs {
+  background-image: url("../../icons/48x48/logs.gif");
+}
+
+#toolbar .start-menu-list .start-item.about {
+  background-image: url("../../icons/48x48/about.gif");
+}
+
+#toolbar .start-menu-list .start-item.logout {
+  background-image: url("../../icons/48x48/logout.gif");
+}
+
+#toolbar .task-buttons {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 3px;
+  overflow: hidden;
+}
+
+#toolbar .task-buttons > .task {
+  box-sizing: border-box;
+  flex: 1 1 0;
+  width: 0;
+  max-width: 160px;
+  min-width: 0;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  margin: 0;
+  padding: 2px 6px 2px 22px;
+  overflow: hidden;
+  text-align: left;
+  background-color: silver;
+  background-image: url("../../icons/48x48/general-app.gif");
+  background-repeat: no-repeat;
+  background-position: 3px center;
+  background-size: 16px 16px;
+}
+
+#toolbar .task-buttons > .task.control-panel {
+  background-image: url("../../icons/48x48/control_panel.gif");
+}
+
+#toolbar .task-buttons > .task.settings {
+  background-image: url("../../icons/48x48/settings.gif");
+}
+
+#toolbar .task-buttons > .task > .task-title {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* display:flex above beats the UA [hidden] { display:none }. */
+#toolbar .task-buttons > .task[hidden] {
+  display: none;
+}
+
+/* Sticky pressed look for the active window's task button (98.css :active inset). */
+#toolbar .task-buttons > .task.active,
+#toolbar .task-buttons > .task[aria-pressed="true"] {
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+  padding: 3px 5px 1px 23px;
+  background-position: 4px 3px;
+}
+
+#toolbar .sunken-panel.clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  align-self: stretch;
+  padding: 0 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
