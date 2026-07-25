@@ -1088,7 +1088,7 @@ html.is-window-resizing * {
 }
 
 .scrollable > .sb-y .sb-dec:disabled {
-  background-image: url("./chrome/icon/scroll-up-disabled.svg");
+  background-image: url("./chrome/icon/button-up-disabled.svg");
   box-shadow:
     inset -1px -1px #808080,
     inset 1px 1px #fff,
@@ -1097,7 +1097,7 @@ html.is-window-resizing * {
 }
 
 .scrollable > .sb-y .sb-inc:disabled {
-  background-image: url("./chrome/icon/scroll-down-disabled.svg");
+  background-image: url("./chrome/icon/button-down-disabled.svg");
   box-shadow:
     inset -1px -1px #808080,
     inset 1px 1px #fff,
@@ -1106,7 +1106,7 @@ html.is-window-resizing * {
 }
 
 .scrollable > .sb-x .sb-dec:disabled {
-  background-image: url("./chrome/icon/scroll-left-disabled.svg");
+  background-image: url("./chrome/icon/button-left-disabled.svg");
   box-shadow:
     inset -1px -1px #808080,
     inset 1px 1px #fff,
@@ -1115,7 +1115,7 @@ html.is-window-resizing * {
 }
 
 .scrollable > .sb-x .sb-inc:disabled {
-  background-image: url("./chrome/icon/scroll-right-disabled.svg");
+  background-image: url("./chrome/icon/button-right-disabled.svg");
   box-shadow:
     inset -1px -1px #808080,
     inset 1px 1px #fff,
