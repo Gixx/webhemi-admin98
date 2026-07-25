@@ -12,3 +12,5 @@ dist/
 *.log
 /.cursor/
 /sources/
+var/*
+!var/.gitkeep
