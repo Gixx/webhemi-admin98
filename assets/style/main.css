@@ -308,8 +308,66 @@ html.is-window-resizing * {
   width: 1024px;
 }
 
+.mxh240 {
+  max-height: 240px;
+}
+
+.mxh250 {
+  max-height: 250px;
+}
+
 .mh500 {
   min-height: 500px;
+}
+
+.mxh500 {
+  max-height: 500px;
+}
+
+/*
+ * .bounded: height-capped windows need the same flex height chain as
+ * .resizable so nested .scrollable hosts get a definite height and can
+ * overflow (custom scrollbar). Pair with an .mxh* utility.
+ */
+.window.bounded {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.window.bounded > .title-bar,
+.window.bounded > .status-bar {
+  flex: 0 0 auto;
+}
+
+.window.bounded > .window-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.bounded > .window-body > .window-pane {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.bounded > .window-body > .window-pane > .panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.bounded > .window-body > .window-pane > .panel > .columns {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .title-bar-text.control-panel,
@@ -464,11 +522,18 @@ html.is-window-resizing * {
   background: #fff;
 }
 
+.disable-pwd-mgr {
+  display: none;
+}
+
 /* wizard-panel-layout: banner | info, actions full width below; bleeds into body margin */
 .wizard-panel-layout {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "banner info"
+    ". actions";
   margin-top: -7px;
   margin-right: -8px;
   margin-left: -8px;
@@ -511,9 +576,9 @@ html.is-window-resizing * {
 }
 
 .wizard-panel-layout > .panel.actions {
-  grid-column: 1 / -1;
+  grid-column: 2;
   grid-row: 2;
-  padding: 10px 8px;
+  padding: 10px 8px 0 8px;
 }
 
 .wizard-panel-layout > .panel.actions > .field-row {
@@ -567,19 +632,12 @@ html.is-window-resizing * {
   padding-top: 10px;
 }
 
-.dialog-panel-layout > .panel .field-row {
-  justify-content: space-between;
-}
-
 .dialog-panel-layout > .panel .field-row label {
   min-width: 75px;
-  flex: 0 0 auto;
 }
 
 .dialog-panel-layout > .panel .field-row input[type="text"],
 .dialog-panel-layout > .panel .field-row input[type="password"] {
-  flex: 1 1 auto;
-  min-width: 0;
   max-width: 220px;
 }
 
@@ -599,6 +657,11 @@ html.is-window-resizing * {
 .columns > * {
   flex: 1 1 0;
   min-width: 0;
+}
+
+/* Let a scrollable column shrink inside a height-bounded .columns row. */
+.columns > .scrollable {
+  min-height: 0;
 }
 
 .stack {
