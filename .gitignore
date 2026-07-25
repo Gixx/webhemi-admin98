@@ -11,6 +11,8 @@ node_modules/
 dist/
 *.log
 /.cursor/
-/sources/
+/var/sources/
 var/*
 !var/.gitkeep
+!var/plan/
+!var/plan/**

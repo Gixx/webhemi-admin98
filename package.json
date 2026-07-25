@@ -4,13 +4,19 @@
   "private": true,
   "description": "Windows 98-style admin desktop UI experiment for WebHemi",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "dev": "http-server . -p 8765 -o -c-1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "98.css": "0.1.21"
   },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "@tailwindcss/vite": "^4.3.3",
+    "sass": "^1.102.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.1.5"
   }
 }
