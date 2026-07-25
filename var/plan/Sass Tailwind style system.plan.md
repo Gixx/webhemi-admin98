@@ -31,7 +31,7 @@ isProject: true
 - **Step 1 (done):** Vite + Tailwind v4 + Sass scaffold. Entry is [`assets/style/main.css`](assets/style/main.css) (Tailwind theme+utilities → tokens). `npm run dev` / `build` / `preview`. `cssMinify: false` while `@media (not (hover))` remains (lightningcss minify). Preflight omitted so Win98 chrome is not reset.
 - **Step 2 (done):** Design tokens in [`assets/style/abstract/tokens.css`](assets/style/abstract/tokens.css) (`:root`). Tailwind `@theme` bridge in `main.css`. Bevel mixins in [`assets/style/abstract/_bevel.scss`](assets/style/abstract/_bevel.scss). Tokens are plain CSS — SCSS partials from the `.css` entry mangled `//` comments.
 - **Step 3 (done):** Full 98.css surface ported into [`assets/style/chrome/`](assets/style/chrome/) partials + icons; entry [`chrome.scss`](assets/style/chrome.scss). Pipeline cut over — npm `98.css` no longer imported. Chrome + product load from [`assets/script/main.js`](assets/script/main.js) (`import` order: chrome → product) because Tailwind’s CSS `@import` resolver does not run Sass on nested SCSS. WebHemi font via `--font-chrome`. Sass-safe media: `@media (not (hover))`. Button/window use bevel mixins.
-- **Step 4 (done):** Removed npm `98.css` from `package.json` / lockfile. Attribution remains in chrome headers + [`assets/style/chrome/README.md`](assets/style/chrome/README.md). Catalog page [`98.css.html`](98.css.html) still compares against our chrome.
+- **Step 4 (done):** Removed npm `98.css` from `package.json` / lockfile. Attribution remains in chrome headers + [`assets/style/chrome/README.md`](assets/style/chrome/README.md). Living catalog: [`catalog.html`](catalog.html).
 - **Step 5 (done):** Product CSS split into [`assets/style/product/`](assets/style/product/) partials (`_base`, `_desktop`, `_toolbar`, `_window`, `_layouts`, `_primitives`, `_scrollbar`); barrel [`product.scss`](assets/style/product.scss) `@use`s them (still imported from `main.js` after chrome).
 - **Step 6 (done):** Replaced `.w*` / `.mxh*` / `.mh*` / product `.justify-*` with Tailwind theme utilities (`w-window-*`, `max-h-window-*`, `min-h-window-*`, built-in `justify-*`) in [`index.html`](index.html). Size tokens remain in `@theme` ([`main.css`](assets/style/main.css)) and `:root` ([`tokens.css`](assets/style/abstract/tokens.css)).
 - **Step 7 (done):** Atom / brick inventory + Storybook hierarchy in [`Style system atom catalog.plan.md`](./Style%20system%20atom%20catalog.plan.md); README points at the style system and catalog page.
@@ -103,7 +103,7 @@ Tailwind: tokens + utilities (widths, justify, gaps). **Do not** `@apply` comple
 
 Full table (atom ↔ SCSS ↔ markup) and Storybook tree: **[Style system atom catalog.plan.md](./Style%20system%20atom%20catalog.plan.md)**.
 
-Regression / reference: [`98.css.html`](../98.css.html) locally, or upstream [docs](https://jdan.github.io/98.css/). Keep **compatible class/markup names** initially; rename only later if Storybook needs a `wh-` prefix.
+Regression / reference: [`catalog.html`](../catalog.html) locally. Keep **compatible class/markup names** initially; rename only later if Storybook needs a `wh-` prefix.
 
 | Atom group | SCSS partial |
 |------------|----------------|

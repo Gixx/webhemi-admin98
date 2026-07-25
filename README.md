@@ -22,7 +22,7 @@ npm run preview  # serve the production build
 
 ### Chrome catalog page
 
-With the dev server running, open http://127.0.0.1:8765/98.css.html — a saved [98.css docs](https://jdan.github.io/98.css/) page wired to **our** chrome (not the npm package), useful for checking every control.
+With the dev server running, open http://127.0.0.1:8765/catalog.html — owned chrome controls in every documented state (buttons, inputs, window chrome, tabs, tree, surfaces, …). Product pane layouts are not included.
 
 ## Style system
 

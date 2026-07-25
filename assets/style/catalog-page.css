@@ -1,0 +1,178 @@
+/*
+ * Page chrome for catalog.html only (not product desktop / pane layouts).
+ */
+@font-face {
+  font-family: "WebHemi Sans Serif";
+  src: url("../fonts/WebHemi Sans Serif.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body.catalog {
+  margin: 0;
+  padding: 0;
+  background: var(--surface, #c0c0c0);
+  color: var(--text-color, #222);
+  font-family: var(--font-chrome);
+  font-size: var(--font-size-chrome);
+}
+
+body.catalog a {
+  color: var(--link-blue);
+}
+
+.catalog-layout {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+}
+
+.catalog-nav {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  width: 200px;
+  max-height: 100vh;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.catalog-nav .tree-view {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.catalog-main {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 24px 48px;
+  box-sizing: border-box;
+}
+
+.catalog-main > h1 {
+  margin: 8px 0 4px;
+  font-size: 2rem;
+}
+
+.catalog-main > .lede {
+  max-width: 40rem;
+  line-height: 1.45;
+  margin: 0 0 16px;
+}
+
+.catalog-section {
+  margin-top: 28px;
+  padding-top: 8px;
+  border-top: 1px solid var(--button-shadow);
+}
+
+.catalog-section > h2 {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+}
+
+.catalog-section > h3 {
+  margin: 18px 0 8px;
+  font-size: 1.05rem;
+}
+
+.catalog-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: flex-start;
+}
+
+.catalog-sample {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.catalog-sample > .label {
+  color: var(--button-shadow);
+  font-size: 11px;
+}
+
+.catalog-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Simulated interaction states (cannot hold :active / :focus permanently). */
+button.catalog-active,
+input[type="submit"].catalog-active,
+input[type="reset"].catalog-active {
+  box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
+  text-shadow: 1px 1px var(--text-color);
+}
+
+button.catalog-focused,
+input[type="submit"].catalog-focused,
+input[type="reset"].catalog-focused {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+.catalog-window {
+  width: 280px;
+}
+
+.catalog-window.wide {
+  width: 360px;
+}
+
+.catalog-tabs {
+  width: min(420px, 100%);
+  /* No flex gap between tablist and panel — selected tab must meet the tabpanel. */
+  gap: 0;
+}
+
+.catalog-tabs > .label {
+  margin-bottom: 8px;
+}
+
+.catalog-tabs menu[role="tablist"] {
+  margin-bottom: 0;
+}
+
+.sunken-panel.catalog-panel {
+  width: min(320px, 100%);
+  height: 100px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.sunken-panel.catalog-table {
+  width: min(360px, 100%);
+  height: 140px;
+}
+
+.sunken-panel.catalog-table-scroll {
+  width: min(480px, 100%);
+  height: 180px;
+}
+
+.progress-indicator.catalog-progress {
+  width: min(280px, 100%);
+}
+
+.is-vertical.catalog-vert {
+  margin: 24px 12px;
+}
+
+@media (max-width: 640px) {
+  .catalog-layout {
+    display: block;
+  }
+
+  .catalog-nav {
+    position: static;
+    width: auto;
+    max-height: none;
+  }
+}

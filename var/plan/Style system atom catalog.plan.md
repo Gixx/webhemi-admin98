@@ -15,7 +15,7 @@ Canonical companion to [Sass Tailwind style system.plan.md](./Sass%20Tailwind%20
 
 Load order (runtime): `main.css` (Tailwind + tokens) → `chrome.scss` → `product.scss` (both SCSS files imported from [`assets/script/main.js`](../../assets/script/main.js)).
 
-Visual regression for chrome: [`98.css.html`](../../98.css.html) with `npm run dev` → http://127.0.0.1:8765/98.css.html
+Visual regression for chrome: [`catalog.html`](../../catalog.html) with `npm run dev` → http://127.0.0.1:8765/catalog.html
 
 Upstream reference (not a dependency): [98.css](https://github.com/jdan/98.css) / [docs](https://jdan.github.io/98.css/). Icons/attribution: [`assets/style/chrome/README.md`](../../assets/style/chrome/README.md).
 
@@ -36,7 +36,7 @@ Keep **compatible class/markup names** with classic 98.css so demos and future s
 | Slider | `_slider.scss` | `input[type=range]`, `.has-box-indicator`, `.is-vertical` |
 | Tabs | `_tabs.scss` | `menu[role=tablist]`, `li[role=tab]` / `aria-selected`, `.window[role=tabpanel]`, `.multirows` |
 | TreeView | `_tree-view.scss` | `ul.tree-view` (+ nested `ul`, `details`/`summary`) |
-| Surfaces | `_surfaces.scss` | `.sunken-panel`, `table` (+ `.interactive`, `.highlighted`), `.field-border`, `.field-border-disabled`, `.status-field-border` |
+| Surfaces | `_surfaces.scss` | `.sunken-panel`, `table` (+ `.interactive`, `.highlighted`), `.field-border`, `.field-border-disabled`, `.status-field-border` — row click selection is JS ([`tableView.js`](../../assets/script/tableView.js)), not chrome CSS |
 | Progress | `_progress.scss` | `.progress-indicator`, `.segmented` > `.progress-indicator-bar` |
 | Code | `_code.scss` | `pre`, `code`, `summary:focus` |
 | Native scrollbar skin | `_scrollbar.scss` | `::-webkit-scrollbar*` (catalog / non-product; demo uses custom scrollbar brick) |
@@ -122,7 +122,7 @@ Stories/
 
 ### Story markup tips
 
-- Prefer semantic HTML from the 98.css docs / [`98.css.html`](../../98.css.html) examples.
+- Prefer semantic HTML from [`catalog.html`](../../catalog.html) examples.
 - Window title-bar buttons need `aria-label="Minimize|Maximize|Restore|Help|Close"` (or `.minimize` etc. class aliases).
 - Checkbox/radio: `input` immediately followed by `label[for]`.
 - Tabs: `menu[role=tablist]` > `li` > `a`, plus `.window[role=tabpanel]`.

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebHemi chrome catalog</title>
+  <link rel="stylesheet" href="/assets/style/main.css" />
+  <link rel="stylesheet" href="/assets/style/catalog-page.css" />
+  <script type="module">
+    import "/assets/style/chrome.scss";
+    import "/assets/script/tableView.js";
+  </script>
+</head>
+<body class="catalog">
+  <div class="catalog-layout">
+    <aside class="catalog-nav" aria-label="Catalog sections">
+      <ul class="tree-view">
+        <li><a href="#intro">Intro</a></li>
+        <li>
+          <a href="#buttons">Buttons</a>
+          <ul>
+            <li><a href="#buttons-states">States</a></li>
+            <li><a href="#buttons-types">Types</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#forms">Forms</a>
+          <ul>
+            <li><a href="#checkbox">Checkbox</a></li>
+            <li><a href="#radio">Radio</a></li>
+            <li><a href="#text">Text fields</a></li>
+            <li><a href="#select">Select</a></li>
+            <li><a href="#slider">Slider</a></li>
+          </ul>
+        </li>
+        <li><a href="#grouping">Grouping</a></li>
+        <li>
+          <a href="#window">Window</a>
+          <ul>
+            <li><a href="#title-bar">Title bar</a></li>
+            <li><a href="#title-controls">Title controls</a></li>
+            <li><a href="#status-bar">Status bar</a></li>
+          </ul>
+        </li>
+        <li><a href="#tabs">Tabs</a></li>
+        <li><a href="#tree">Tree view</a></li>
+        <li><a href="#surfaces">Surfaces</a></li>
+        <li><a href="#table">Table</a></li>
+        <li><a href="#progress">Progress</a></li>
+        <li><a href="#misc">Misc</a></li>
+      </ul>
+    </aside>
+
+    <main class="catalog-main">
+      <h1 id="intro">WebHemi chrome catalog</h1>
+      <p class="lede">
+        Owned Win98 control surface (<code>assets/style/chrome/</code>).
+        Product pane layouts (icon / wizard / heading / dialog) are intentionally omitted.
+        Classes <code>catalog-active</code> and <code>catalog-focused</code> simulate pressed and focus
+        looks that cannot stay in the real <code>:active</code> / <code>:focus</code> states.
+      </p>
+
+      <!-- Buttons -->
+      <section class="catalog-section" id="buttons">
+        <h2>Buttons</h2>
+
+        <h3 id="buttons-states">States</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Default</span>
+            <div class="catalog-row">
+              <button type="button">OK</button>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.default (Enter action)</span>
+            <div class="catalog-row">
+              <button type="button" class="default">OK</button>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Disabled</span>
+            <div class="catalog-row">
+              <button type="button" disabled>OK</button>
+              <button type="button" class="default" disabled>OK</button>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Simulated :active</span>
+            <div class="catalog-row">
+              <button type="button" class="catalog-active">Pressed</button>
+              <button type="button" class="default catalog-active">Pressed</button>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Simulated :focus</span>
+            <div class="catalog-row">
+              <button type="button" class="catalog-focused">Focused</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="buttons-types">Types</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">button / submit / reset</span>
+            <div class="catalog-row">
+              <button type="button">Button</button>
+              <input type="submit" value="Submit" />
+              <input type="reset" value="Reset" />
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">submit / reset disabled</span>
+            <div class="catalog-row">
+              <input type="submit" value="Submit" disabled />
+              <input type="reset" value="Reset" disabled />
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.vertical-bar</span>
+            <div class="catalog-row">
+              <button type="button">Cut</button>
+              <div class="vertical-bar"></div>
+              <button type="button">Copy</button>
+              <div class="vertical-bar"></div>
+              <button type="button">Paste</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Forms -->
+      <section class="catalog-section" id="forms">
+        <h2>Forms</h2>
+
+        <h3 id="checkbox">Checkbox</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Unchecked</span>
+            <div class="field-row">
+              <input type="checkbox" id="cb-off" />
+              <label for="cb-off">Unchecked</label>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Checked</span>
+            <div class="field-row">
+              <input type="checkbox" id="cb-on" checked />
+              <label for="cb-on">Checked</label>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Disabled</span>
+            <div class="field-row">
+              <input type="checkbox" id="cb-dis" disabled />
+              <label for="cb-dis">Disabled</label>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Checked + disabled</span>
+            <div class="field-row">
+              <input type="checkbox" id="cb-on-dis" checked disabled />
+              <label for="cb-on-dis">Checked disabled</label>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="radio">Radio</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Group (interactive)</span>
+            <div class="field-row">
+              <input type="radio" id="r1" name="cat-radio" checked />
+              <label for="r1">Selected</label>
+            </div>
+            <div class="field-row">
+              <input type="radio" id="r2" name="cat-radio" />
+              <label for="r2">Idle</label>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Disabled group</span>
+            <div class="field-row">
+              <input type="radio" id="r3" name="cat-radio-dis" checked disabled />
+              <label for="r3">Selected disabled</label>
+            </div>
+            <div class="field-row">
+              <input type="radio" id="r4" name="cat-radio-dis" disabled />
+              <label for="r4">Idle disabled</label>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="text">Text fields</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">text</span>
+            <input type="text" value="Sample text" class="w-window-xs" />
+          </div>
+          <div class="catalog-sample">
+            <span class="label">password</span>
+            <input type="password" value="secret" class="w-window-xs" />
+          </div>
+          <div class="catalog-sample">
+            <span class="label">email / url / tel / number / search</span>
+            <div class="catalog-row">
+              <input type="email" value="a@b.c" class="w-window-xs" />
+              <input type="number" value="42" class="w-window-2xs" />
+              <input type="search" value="query" class="w-window-xs" />
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">disabled</span>
+            <input type="text" value="Disabled" class="w-window-xs" disabled />
+          </div>
+          <div class="catalog-sample">
+            <span class="label">readonly</span>
+            <input type="text" value="Read only" class="w-window-xs" readonly />
+          </div>
+          <div class="catalog-sample">
+            <span class="label">textarea</span>
+            <textarea rows="3" class="w-window-sm">Multiline text</textarea>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">textarea disabled</span>
+            <textarea rows="2" class="w-window-sm" disabled>Disabled</textarea>
+          </div>
+        </div>
+
+        <h3 id="select">Select</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Closed</span>
+            <select class="w-window-xs">
+              <option>5 - Incredible!</option>
+              <option>4 - Great!</option>
+              <option selected>3 - Pretty good</option>
+              <option>2 - Not so great</option>
+              <option>1 - Unfortunate</option>
+            </select>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">With disabled option</span>
+            <select class="w-window-xs">
+              <option>Available</option>
+              <option disabled>Unavailable</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 id="slider">Slider</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">range</span>
+            <input type="range" min="0" max="100" value="40" style="width: 200px" />
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.has-box-indicator</span>
+            <input type="range" class="has-box-indicator" min="0" max="100" value="60" style="width: 200px" />
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.is-vertical</span>
+            <div class="is-vertical catalog-vert">
+              <input type="range" min="0" max="100" value="30" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grouping -->
+      <section class="catalog-section" id="grouping">
+        <h2>Grouping</h2>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">fieldset + legend</span>
+            <fieldset style="width: 260px">
+              <legend>Options</legend>
+              <div class="field-row">
+                <input type="radio" id="g1" name="grp" checked />
+                <label for="g1">One</label>
+              </div>
+              <div class="field-row">
+                <input type="radio" id="g2" name="grp" />
+                <label for="g2">Two</label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.field-row (label beside input)</span>
+            <div class="field-row">
+              <label for="row-occupation">Occupation</label>
+              <input type="text" id="row-occupation" value="Developer" class="w-window-xs" />
+            </div>
+            <div class="field-row">
+              <label for="row-company">Company</label>
+              <input type="text" id="row-company" class="w-window-xs" />
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.field-row-stacked (label above input)</span>
+            <div class="field-row-stacked" style="width: 220px">
+              <label for="stack-name">Name</label>
+              <input type="text" id="stack-name" />
+              <label for="stack-city">City</label>
+              <input type="text" id="stack-city" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Window -->
+      <section class="catalog-section" id="window">
+        <h2>Window chrome</h2>
+        <p class="lede">Static shells only — no drag/resize product behavior, no pane layouts.</p>
+
+        <h3 id="title-bar">Title bar</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Active</span>
+            <div class="window catalog-window">
+              <div class="title-bar">
+                <div class="title-bar-text">Active window</div>
+                <div class="title-bar-controls">
+                  <button type="button" aria-label="Minimize"></button>
+                  <button type="button" aria-label="Maximize"></button>
+                  <button type="button" aria-label="Close"></button>
+                </div>
+              </div>
+              <div class="window-body">
+                <p>Window body content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Inactive (.title-bar.inactive)</span>
+            <div class="window catalog-window">
+              <div class="title-bar inactive">
+                <div class="title-bar-text">Inactive window</div>
+                <div class="title-bar-controls">
+                  <button type="button" aria-label="Minimize"></button>
+                  <button type="button" aria-label="Maximize"></button>
+                  <button type="button" aria-label="Close"></button>
+                </div>
+              </div>
+              <div class="window-body">
+                <p>Background window.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="title-controls">Title bar controls</h3>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Minimize / Maximize / Restore / Help / Close</span>
+            <div class="window catalog-window wide">
+              <div class="title-bar">
+                <div class="title-bar-text">All controls</div>
+                <div class="title-bar-controls">
+                  <button type="button" aria-label="Minimize"></button>
+                  <button type="button" aria-label="Maximize"></button>
+                  <button type="button" aria-label="Restore"></button>
+                  <button type="button" aria-label="Help"></button>
+                  <button type="button" aria-label="Close"></button>
+                </div>
+              </div>
+              <div class="window-body">
+                <p>Every title-bar control glyph.</p>
+              </div>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Maximize disabled</span>
+            <div class="window catalog-window">
+              <div class="title-bar">
+                <div class="title-bar-text">No maximize</div>
+                <div class="title-bar-controls">
+                  <button type="button" aria-label="Minimize"></button>
+                  <button type="button" aria-label="Maximize" disabled></button>
+                  <button type="button" aria-label="Close"></button>
+                </div>
+              </div>
+              <div class="window-body">
+                <p>Maximize button disabled.</p>
+              </div>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Class aliases (.minimize etc.)</span>
+            <div class="window catalog-window">
+              <div class="title-bar">
+                <div class="title-bar-text">Class aliases</div>
+                <div class="title-bar-controls">
+                  <button type="button" class="minimize" aria-label="x"></button>
+                  <button type="button" class="maximize" aria-label="x"></button>
+                  <button type="button" class="close" aria-label="x"></button>
+                </div>
+              </div>
+              <div class="window-body">
+                <p>Glyphs via control classes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="status-bar">Status bar</h3>
+        <div class="catalog-sample">
+          <span class="label">.status-bar + .status-bar-field</span>
+          <div class="window catalog-window wide">
+            <div class="title-bar">
+              <div class="title-bar-text">With status</div>
+              <div class="title-bar-controls">
+                <button type="button" aria-label="Close"></button>
+              </div>
+            </div>
+            <div class="window-body">
+              <p>Body above the status bar.</p>
+            </div>
+            <div class="status-bar">
+              <p class="status-bar-field">Ready</p>
+              <p class="status-bar-field">CPU 00:00</p>
+              <p class="status-bar-field">INS</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs -->
+      <section class="catalog-section" id="tabs">
+        <h2>Tabs</h2>
+        <div class="catalog-sample catalog-tabs">
+          <span class="label">tablist + selected / idle + tabpanel</span>
+          <menu role="tablist">
+            <li role="tab" aria-selected="true"><a href="#tab-a">General</a></li>
+            <li role="tab"><a href="#tab-b">Desktop</a></li>
+            <li role="tab"><a href="#tab-c">Screen Saver</a></li>
+          </menu>
+          <div class="window" role="tabpanel" id="tab-a">
+            <div class="window-body">
+              <p>Selected tab panel content.</p>
+            </div>
+          </div>
+        </div>
+        <div class="catalog-sample catalog-tabs" style="margin-top: 16px">
+          <span class="label">.multirows (wraps into rows; equal-width tabs)</span>
+          <menu role="tablist" class="multirows">
+            <li role="tab"><a href="#m1">Desktop</a></li>
+            <li role="tab"><a href="#m2">My computer</a></li>
+            <li role="tab"><a href="#m3">Control panel</a></li>
+            <li role="tab"><a href="#m4">Devices</a></li>
+            <li role="tab"><a href="#m5">Hardware</a></li>
+            <li role="tab"><a href="#m6">Performance</a></li>
+            <li role="tab" aria-selected="true"><a href="#m7">Users</a></li>
+            <li role="tab"><a href="#m8">Network</a></li>
+            <li role="tab"><a href="#m9">Programs</a></li>
+            <li role="tab"><a href="#m10">Services</a></li>
+            <li role="tab"><a href="#m11">Resources</a></li>
+            <li role="tab"><a href="#m12">Advanced</a></li>
+          </menu>
+          <div class="window" role="tabpanel">
+            <div class="window-body">
+              <p>Multi-row tab strip.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tree -->
+      <section class="catalog-section" id="tree">
+        <h2>Tree view</h2>
+        <div class="catalog-sample" style="width: min(280px, 100%)">
+          <span class="label">ul.tree-view (nested + details)</span>
+          <ul class="tree-view">
+            <li><a href="#tree">Root item</a></li>
+            <li>
+              <a href="#tree">Expandable</a>
+              <ul>
+                <li><a href="#tree">Child A</a></li>
+                <li><a href="#tree">Child B</a></li>
+                <li>
+                  <details open>
+                    <summary>Nested folder</summary>
+                    <ul>
+                      <li><a href="#tree">Leaf</a></li>
+                    </ul>
+                  </details>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#tree">Another root</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Surfaces -->
+      <section class="catalog-section" id="surfaces">
+        <h2>Surfaces</h2>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">.sunken-panel</span>
+            <div class="sunken-panel catalog-panel">Sunken panel (chrome default white).</div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.field-border</span>
+            <div class="field-border" style="width: 200px; padding: 8px">Field border</div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.field-border-disabled</span>
+            <div class="field-border-disabled" style="width: 200px; padding: 8px">Disabled field</div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.status-field-border</span>
+            <div class="status-field-border" style="width: 200px; padding: 4px 8px">Status field</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Table -->
+      <section class="catalog-section" id="table">
+        <h2>Table</h2>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Narrow content → columns stretch to fill panel (.highlighted)</span>
+            <div class="sunken-panel catalog-table">
+              <table class="interactive">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>readme.txt</td>
+                    <td>Text</td>
+                    <td>1 KB</td>
+                  </tr>
+                  <tr class="highlighted">
+                    <td>logo.gif</td>
+                    <td>Image</td>
+                    <td>12 KB</td>
+                  </tr>
+                  <tr>
+                    <td>app.exe</td>
+                    <td>Application</td>
+                    <td>240 KB</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Many columns + rows → horizontal &amp; vertical scroll (sticky header)</span>
+            <div class="sunken-panel catalog-table-scroll">
+              <table class="interactive">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Modified</th>
+                    <th>Attributes</th>
+                    <th>Owner</th>
+                    <th>Path</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>001</td>
+                    <td>readme.txt</td>
+                    <td>Text Document</td>
+                    <td>1 KB</td>
+                    <td>1998-05-12 09:14</td>
+                    <td>A</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Windows\readme.txt</td>
+                  </tr>
+                  <tr class="highlighted">
+                    <td>002</td>
+                    <td>logo.gif</td>
+                    <td>GIF Image</td>
+                    <td>12 KB</td>
+                    <td>1998-06-01 14:02</td>
+                    <td>A</td>
+                    <td>Admin</td>
+                    <td>C:\Program Files\App\logo.gif</td>
+                  </tr>
+                  <tr>
+                    <td>003</td>
+                    <td>app.exe</td>
+                    <td>Application</td>
+                    <td>240 KB</td>
+                    <td>1998-06-18 11:30</td>
+                    <td>A</td>
+                    <td>Admin</td>
+                    <td>C:\Program Files\App\app.exe</td>
+                  </tr>
+                  <tr>
+                    <td>004</td>
+                    <td>config.ini</td>
+                    <td>Configuration</td>
+                    <td>2 KB</td>
+                    <td>1998-07-02 08:00</td>
+                    <td>A R</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Program Files\App\config.ini</td>
+                  </tr>
+                  <tr>
+                    <td>005</td>
+                    <td>help.hlp</td>
+                    <td>Help File</td>
+                    <td>128 KB</td>
+                    <td>1998-05-20 16:45</td>
+                    <td>A</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Program Files\App\help.hlp</td>
+                  </tr>
+                  <tr>
+                    <td>006</td>
+                    <td>data.mdb</td>
+                    <td>Database</td>
+                    <td>1.2 MB</td>
+                    <td>1998-07-10 19:22</td>
+                    <td>A</td>
+                    <td>Admin</td>
+                    <td>C:\Program Files\App\data.mdb</td>
+                  </tr>
+                  <tr>
+                    <td>007</td>
+                    <td>setup.log</td>
+                    <td>Text Document</td>
+                    <td>18 KB</td>
+                    <td>1998-07-11 10:05</td>
+                    <td>A</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Program Files\App\setup.log</td>
+                  </tr>
+                  <tr>
+                    <td>008</td>
+                    <td>driver.sys</td>
+                    <td>System File</td>
+                    <td>64 KB</td>
+                    <td>1998-04-01 00:00</td>
+                    <td>A S H</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Windows\System\driver.sys</td>
+                  </tr>
+                  <tr>
+                    <td>009</td>
+                    <td>fonts.fon</td>
+                    <td>Font</td>
+                    <td>45 KB</td>
+                    <td>1998-04-01 00:00</td>
+                    <td>A</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Windows\Fonts\fonts.fon</td>
+                  </tr>
+                  <tr>
+                    <td>010</td>
+                    <td>backup.zip</td>
+                    <td>Compressed</td>
+                    <td>4.5 MB</td>
+                    <td>1998-07-20 21:11</td>
+                    <td>A</td>
+                    <td>Admin</td>
+                    <td>C:\Temp\backup.zip</td>
+                  </tr>
+                  <tr>
+                    <td>011</td>
+                    <td>notes.doc</td>
+                    <td>Document</td>
+                    <td>88 KB</td>
+                    <td>1998-07-22 13:40</td>
+                    <td>A</td>
+                    <td>User</td>
+                    <td>C:\My Documents\notes.doc</td>
+                  </tr>
+                  <tr>
+                    <td>012</td>
+                    <td>calc.exe</td>
+                    <td>Application</td>
+                    <td>96 KB</td>
+                    <td>1998-04-01 00:00</td>
+                    <td>A</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Windows\calc.exe</td>
+                  </tr>
+                  <tr>
+                    <td>013</td>
+                    <td>sol.exe</td>
+                    <td>Application</td>
+                    <td>112 KB</td>
+                    <td>1998-04-01 00:00</td>
+                    <td>A</td>
+                    <td>SYSTEM</td>
+                    <td>C:\Windows\sol.exe</td>
+                  </tr>
+                  <tr>
+                    <td>014</td>
+                    <td>tmp0001.tmp</td>
+                    <td>Temporary</td>
+                    <td>4 KB</td>
+                    <td>1998-07-25 12:00</td>
+                    <td>A</td>
+                    <td>User</td>
+                    <td>C:\Windows\Temp\tmp0001.tmp</td>
+                  </tr>
+                  <tr>
+                    <td>015</td>
+                    <td>network.lnk</td>
+                    <td>Shortcut</td>
+                    <td>1 KB</td>
+                    <td>1998-06-15 09:33</td>
+                    <td>A</td>
+                    <td>User</td>
+                    <td>C:\Windows\Desktop\network.lnk</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Progress -->
+      <section class="catalog-section" id="progress">
+        <h2>Progress</h2>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">.progress-indicator</span>
+            <div class="progress-indicator catalog-progress">
+              <span class="progress-indicator-bar" style="width: 40%"></span>
+            </div>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">.segmented</span>
+            <div class="progress-indicator segmented catalog-progress">
+              <span class="progress-indicator-bar" style="width: 70%"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Misc -->
+      <section class="catalog-section" id="misc">
+        <h2>Misc</h2>
+        <div class="catalog-grid">
+          <div class="catalog-sample">
+            <span class="label">Link + focus (tab to me)</span>
+            <p><a href="#intro">Sample link</a></p>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">Underline helper &lt;u&gt;</span>
+            <p>Press <u>A</u>lt for access keys.</p>
+          </div>
+          <div class="catalog-sample">
+            <span class="label">pre / code</span>
+            <pre style="width: min(320px, 100%)"><code>npm run dev
+# open /catalog.html</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

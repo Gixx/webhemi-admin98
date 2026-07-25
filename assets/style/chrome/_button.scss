@@ -73,9 +73,11 @@ input[readonly] + label {
   color: var(--button-shadow);
 }
 
+/* Must beat `input[type=submit|reset] { color: transparent }` (higher specificity). */
 button:disabled,
 input[type="submit"]:disabled,
 input[type="reset"]:disabled,
 :disabled + label {
+  color: var(--button-shadow);
   text-shadow: 1px 1px 0 var(--button-highlight);
 }
