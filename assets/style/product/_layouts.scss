@@ -41,7 +41,7 @@
   flex-direction: column;
   flex: 0 0 175px;
   min-width: 180px;
-  max-width: 220px;
+  max-width: var(--width-window-xs);
   padding: 12px 14px;
   background: linear-gradient(182deg, rgba(16, 134, 214, 0.4) 0%, #fff 100%);
   border-right: 1px solid #dfdfdf;
@@ -225,7 +225,7 @@
 
 .dialog-panel-layout > .panel .field-row input[type="text"],
 .dialog-panel-layout > .panel .field-row input[type="password"] {
-  max-width: 220px;
+  max-width: var(--width-window-xs);
 }
 
 .dialog-panel-layout > .panel.actions {

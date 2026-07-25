@@ -47,7 +47,7 @@
   width: 100%;
 }
 
-.window.resizable.is-sized > .window-body > .window-pane.mh500 {
+.window.resizable.is-sized > .window-body > .window-pane.min-h-window-md {
   min-height: 0;
 }
 
@@ -117,7 +117,7 @@ html.is-window-resizing * {
 /*
  * .bounded: height-capped windows need the same flex height chain as
  * .resizable so nested .scrollable hosts get a definite height and can
- * overflow (custom scrollbar). Pair with an .mxh* utility.
+ * overflow (custom scrollbar). Pair with a max-h-window-* utility.
  */
 .window.bounded {
   display: flex;

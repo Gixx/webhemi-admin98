@@ -9,7 +9,7 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-/* Tailwind theme bridge (utilities: bg-desktop, w-window-lg, font-webhemi, …) */
+/* Tailwind theme bridge — window scale: w-window-*, max-h-window-*, min-h-window-* */
 @theme {
   --color-desktop: #008284;
   --color-surface: #c0c0c0;
