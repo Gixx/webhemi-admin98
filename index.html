@@ -11,7 +11,6 @@
   <div class="icon-list">
     <div id="icon-site-portfolio" draggable="true" class="icon site"><a href="#"><span>My Portfolio Site</span></a></div>
     <div id="icon-site-blog" draggable="true" class="icon site"><a href="#"><span>My Dev Blog Site</span></a></div>
-    <div id="icon-control-panel" draggable="true" class="icon control-panel" data-open-window="window-control-panel"><a href="#"><span>Control panel</span></a></div>
   </div>
 
   <div id="window-authentication" class="window w332" draggable="true">
@@ -42,7 +41,7 @@
           <div class="field-row justify-end">
             <button type="button" accesskey="o" class="default"><u>O</u>K</button>
             <button type="button" disabled accesskey="c"><u>C</u>ancel</button>
-            <button type="button" accesskey="s"><u>S</u>hutdown...</button>
+            <button type="button" accesskey="r"><u>R</u>egister</button>
           </div>
         </div>
       </div>
@@ -51,7 +50,7 @@
 
   <div id="window-setup-wizard" class="window w550" draggable="true">
     <div class="title-bar">
-      <div class="title-bar-text">Windows NT Workstation Setup</div>
+      <div class="title-bar-text">WebHemi CMS Setup</div>
     </div>
     <div class="window-body">
       <div class="window-pane wizard-panel-layout">
@@ -59,14 +58,14 @@
           <img src="assets/upload/2026-07-18/setup-wizard.gif" alt="" />
         </div>
         <div class="panel info">
-          <h4>Welcome to the Windows NT 5.0 Setup Wizard</h4>
+          <h4>Welcome to the WebHemi CMS 1.0 Setup Wizard</h4>
           <p>
-            This wizard installs Windows NT 5.0 Workstation on your computer. The wizard will need to gather some
-            information about you and your computer to properly setup Windows NT 5.0
+            This wizard helps you install the WebHemi CMS 1.0 on your server. The wizard will need to gather some
+            information about you and your preferences to properly setup WebHemi CMS 1.0
           </p>
           <p>
-            Windows NT 5.0 Workstation provides a powerful solution to all your desktop computing needs. Windows NT 5.0
-            Workstation provides the ease of use of Windows with enhanced reliability and security.
+            WebHemi CMS 1.0 provides a powerful solution to all your website computing needs. WebHemi CMS 1.0
+            provides the ease of use of a desktop system with enhanced reliability and security.
           </p>
           <p>
             Click Next to continue with Setup.
@@ -206,8 +205,32 @@
   </div>
 
   <div class="window" id="toolbar">
+    <div class="start-menu" id="start-menu" hidden>
+      <div class="start-menu-banner" aria-hidden="true"><span>WebHemi 1.0</span></div>
+      <ul class="start-menu-list" role="menu" aria-label="Menu">
+        <li role="none">
+          <button type="button" role="menuitem" class="start-item uploads">Uploads</button>
+        </li>
+        <li role="none">
+          <button type="button" role="menuitem" class="start-item control-panel" data-open-window="window-control-panel">Control Panel</button>
+        </li>
+        <li role="none">
+          <button type="button" role="menuitem" class="start-item search">Search</button>
+        </li>
+        <li role="none">
+          <button type="button" role="menuitem" class="start-item logs">Logs</button>
+        </li>
+        <li class="separator" role="separator"></li>
+        <li role="none">
+          <button type="button" role="menuitem" class="start-item about">About</button>
+        </li>
+        <li role="none">
+          <button type="button" role="menuitem" class="start-item logout">Logout</button>
+        </li>
+      </ul>
+    </div>
     <div class="window-body">
-      <button type="button" class="menu">Menu</button>
+      <button type="button" class="menu" aria-expanded="false" aria-controls="start-menu" aria-haspopup="menu">Menu</button>
       <div class="task-buttons">
         <button type="button" class="task" data-window="window-authentication" aria-pressed="false" title="Enter Password">
           <span class="task-title">Enter Password</span>
@@ -227,6 +250,6 @@
   </div>
 
   <script type="application/javascript" src="assets/script/scrollbar.js"></script>
-  <script type="application/javascript" src="assets/script/main.js"></script>
+  <script type="module" src="assets/script/main.js"></script>
 </body>
 </html>
