@@ -21,7 +21,7 @@ todos:
     status: completed
   - id: "docs-inventory"
     content: "Update README; document atom catalog + Storybook mapping in var/plan/"
-    status: pending
+    status: completed
 isProject: true
 ---
 # Sass + Tailwind style system (own Win98 chrome)
@@ -34,6 +34,7 @@ isProject: true
 - **Step 4 (done):** Removed npm `98.css` from `package.json` / lockfile. Attribution remains in chrome headers + [`assets/style/chrome/README.md`](assets/style/chrome/README.md). Catalog page [`98.css.html`](98.css.html) still compares against our chrome.
 - **Step 5 (done):** Product CSS split into [`assets/style/product/`](assets/style/product/) partials (`_base`, `_desktop`, `_toolbar`, `_window`, `_layouts`, `_primitives`, `_scrollbar`); barrel [`product.scss`](assets/style/product.scss) `@use`s them (still imported from `main.js` after chrome).
 - **Step 6 (done):** Replaced `.w*` / `.mxh*` / `.mh*` / product `.justify-*` with Tailwind theme utilities (`w-window-*`, `max-h-window-*`, `min-h-window-*`, built-in `justify-*`) in [`index.html`](index.html). Size tokens remain in `@theme` ([`main.css`](assets/style/main.css)) and `:root` ([`tokens.css`](assets/style/abstract/tokens.css)).
+- **Step 7 (done):** Atom / brick inventory + Storybook hierarchy in [`Style system atom catalog.plan.md`](./Style%20system%20atom%20catalog.plan.md); README points at the style system and catalog page.
 
 ## Decisions (confirmed)
 
@@ -98,27 +99,30 @@ flowchart TB
 
 Tailwind: tokens + utilities (widths, justify, gaps). **Do not** `@apply` complex bevel/chrome into one-off utilities — chrome stays named SCSS atoms.
 
-## Chrome atom catalog (port all of 98.css)
+## Chrome atom catalog (ported)
 
-Source of truth while porting: [node_modules/98.css/style.css](node_modules/98.css/style.css) + [docs](https://jdan.github.io/98.css/). Keep **compatible class/markup names** initially so the demo keeps working; rename only later if Storybook needs a `wh-` prefix.
+Full table (atom ↔ SCSS ↔ markup) and Storybook tree: **[Style system atom catalog.plan.md](./Style%20system%20atom%20catalog.plan.md)**.
 
-| Atom group | Selectors / patterns |
-|------------|----------------------|
-| Typography / reset | base font, `u`, headings used by 98 |
-| Button | `button`, `.default`, active/disabled/focus |
-| Window shell | `.window`, `.title-bar`, `.title-bar-text`, `.title-bar-controls` (+ min/max/restore/help/close), `.window-body`, `.status-bar`, `.status-bar-field` |
-| Grouping | `fieldset`/`legend`, `.field-row`, `.field-row-stacked` |
-| Forms | text/password inputs, checkbox, radio, `select`, `textarea` |
-| Slider | `input[type=range]`, `.has-box-indicator`, `.is-vertical` |
-| Tabs | `[role=tablist]`, `[role=tab]`, `.window[role=tabpanel]`, `.multirows` |
-| Tree | `ul.tree-view` (+ nested) |
-| Surfaces | `.sunken-panel`, `.field-border`, `.field-border-disabled`, `.status-field-border` |
-| Progress | `.progress-indicator`, `.segmented` |
-| Misc | `.vertical-bar`, etc. as in upstream |
+Regression / reference: [`98.css.html`](../98.css.html) locally, or upstream [docs](https://jdan.github.io/98.css/). Keep **compatible class/markup names** initially; rename only later if Storybook needs a `wh-` prefix.
 
-**Fonts:** stop using 98.css Pixelated MS Sans as default; WebHemi Sans (already in demo) becomes the chrome font via tokens. Optionally keep pixel font as an opt-in theme later.
+| Atom group | SCSS partial |
+|------------|----------------|
+| Typography | `chrome/_typography.scss` |
+| Button | `chrome/_button.scss` |
+| Window shell | `chrome/_window.scss` |
+| Grouping | `chrome/_grouping.scss` |
+| Forms | `chrome/_forms.scss` |
+| Slider | `chrome/_slider.scss` |
+| Tabs | `chrome/_tabs.scss` |
+| Tree | `chrome/_tree-view.scss` |
+| Surfaces | `chrome/_surfaces.scss` |
+| Progress | `chrome/_progress.scss` |
+| Code / misc | `chrome/_code.scss` |
+| Native scrollbar skin | `chrome/_scrollbar.scss` |
 
-**Bevel system:** extract shared raised/sunken border mixins (box-shadow recipes from 98.css) into `_bevel.scss` so buttons, windows, and inputs share one language.
+**Fonts:** WebHemi Sans via `--font-chrome` / product `@font-face` (not Pixelated MS Sans).
+
+**Bevel system:** shared mixins in `abstract/_bevel.scss`.
 
 ## SCSS file map
 
@@ -190,13 +194,15 @@ Same split as before for [main.css](assets/style/main.css) product rules: deskto
 
 ## Storybook readiness (not implementing Storybook yet)
 
-Suggested future story map (for when Storybook lands):
+Full inventory (chrome atoms ↔ SCSS files, product bricks, theme utilities, suggested story tree): **[Style system atom catalog.plan.md](./Style%20system%20atom%20catalog.plan.md)**.
 
-- **Atoms:** Button, TextBox, Checkbox, Radio, Select, Window, TitleBar, StatusBar, Tab, TreeItem, Progress, SunkenPanel
-- **Bricks:** FieldRow, Fieldset, TabList, TitleBarControls, ScrollableRegion
+Summary hierarchy:
+
+- **Atoms:** Button, TextBox, Checkbox, Radio, Select, Window, TitleBar, StatusBar, Tab, TreeItem, Progress, SunkenPanel, …
+- **Bricks:** FieldRow, Fieldset, TabList, TitleBarControls, ScrollableRegion, Columns, Stack
 - **Components:** DialogWindow, IconPanelWindow, WizardWindow, Taskbar, StartMenu, DesktopIcon
 
-Chrome SCSS file boundaries should match atom boundaries so each story can import a partial or a generated CSS chunk later.
+Chrome SCSS file boundaries match atom boundaries so each story can import a partial or a generated CSS chunk later.
 
 ## Out of scope (this pass)
 
