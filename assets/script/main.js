@@ -2,6 +2,9 @@
  * Desktop shell entry: place items, wire drag/resize, and route UI events.
  */
 
+import '../style/chrome.scss';
+import '../style/product.scss';
+
 import {
   dashboard,
   state,

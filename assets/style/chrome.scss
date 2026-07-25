@@ -1,0 +1,17 @@
+/*
+ * Owned Win98 chrome entry (ported from 98.css).
+ * Imported from main.js so Vite Sass compiles @use before CSS reaches Tailwind.
+ * Tokens: abstract/tokens.css (loaded from main.css).
+ */
+@use "./chrome/typography";
+@use "./chrome/button";
+@use "./chrome/window";
+@use "./chrome/grouping";
+@use "./chrome/forms";
+@use "./chrome/slider";
+@use "./chrome/tree-view";
+@use "./chrome/code";
+@use "./chrome/scrollbar";
+@use "./chrome/tabs";
+@use "./chrome/surfaces";
+@use "./chrome/progress";

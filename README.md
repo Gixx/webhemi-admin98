@@ -2,7 +2,7 @@
 
 Windows 98–style admin desktop UI experiment for [WebHemi](https://github.com/Gixx/WebHemi).
 
-A teal desktop shell with draggable icons/windows. Window chrome currently uses [98.css](https://github.com/jdan/98.css) (to be replaced by owned SCSS atoms). Custom code covers the desktop, icons, drag/resize/localStorage, Control Panel feature panel, taskbar, and wizard layout.
+A teal desktop shell with draggable icons/windows. Window chrome is an owned SCSS port of the [98.css](https://github.com/jdan/98.css) surface (`assets/style/chrome/`). Custom code covers the desktop, icons, drag/resize/localStorage, Control Panel feature panel, taskbar, and wizard layout.
 
 Styles are built with **Vite**, **Sass**, and **Tailwind CSS v4**.
 

@@ -1,0 +1,46 @@
+// Ported from 98.css (MIT) — https://github.com/jdan/98.css
+// Tokens: abstract/tokens.css; icons: ./icon/*.svg
+body {
+  font-family: var(--font-chrome);
+  font-size: var(--font-size-chrome);
+  color: var(--text-color);
+}
+
+button,
+label,
+input,
+legend,
+textarea,
+select,
+option,
+table,
+ul.tree-view,
+.window,
+.title-bar,
+li[role=tab] {
+  font-family: var(--font-chrome);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: var(--font-size-chrome);
+}
+
+h1 {
+  font-size: 5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+u {
+  text-decoration: none;
+  border-bottom: 0.5px solid #222222;
+}

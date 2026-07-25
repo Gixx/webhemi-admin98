@@ -1,0 +1,18 @@
+// Ported from 98.css (MIT) — https://github.com/jdan/98.css
+// Tokens: abstract/tokens.css; icons: ./icon/*.svg
+pre {
+  display: block;
+  background: var(--button-highlight);
+  box-shadow: var(--border-field);
+  padding: 12px 8px;
+  margin: 0;
+}
+
+code,
+code * {
+  font-family: monospace;
+}
+
+summary:focus {
+  outline: 1px dotted #000000;
+}

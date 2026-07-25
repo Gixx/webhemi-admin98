@@ -8,7 +8,7 @@ export default defineConfig({
     open: true,
   },
   build: {
-    // 98.css uses `@media (not(hover))`, which lightningcss minify rejects.
-    cssMinify: false,
+  // Owned chrome uses `@media (not (hover))`; keep minify off if lightningcss still rejects related queries.
+  cssMinify: false,
   },
 });

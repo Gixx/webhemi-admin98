@@ -1,8 +1,8 @@
 /*
- * Vite style entry: Tailwind v4 → 98.css (temporary) → owned tokens → product SCSS.
- * Owned chrome atoms will replace the 98.css import in a later step.
- *
- * Skip Tailwind Preflight — it resets borders/padding/fonts and fights 98.css.
+ * Vite style entry: Tailwind v4 + design tokens.
+ * Chrome and product SCSS load from main.js (in that order) so Vite Sass
+ * compiles them; Tailwind's CSS @import path does not run Sass on nested SCSS.
+ * Skip Tailwind Preflight — it resets borders/padding/fonts and fights Win98 chrome.
  */
 
 @layer theme, base, components, utilities;
@@ -41,9 +41,4 @@
   --min-height-window-md: 500px;
 }
 
-@import "98.css/dist/98.css";
-
-/* Own :root tokens (override 98.css variables; chrome port will rely on these). */
 @import "./abstract/tokens.css";
-
-@import "./product.scss";

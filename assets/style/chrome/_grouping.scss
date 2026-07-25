@@ -1,0 +1,40 @@
+// Ported from 98.css (MIT) — https://github.com/jdan/98.css
+// Tokens: abstract/tokens.css; icons: ./icon/*.svg
+fieldset {
+  border-image: url("./icon/groupbox-border.svg") 2;
+  padding: calc(2 * var(--border-width) + var(--element-spacing));
+  padding-block-start: var(--element-spacing);
+  margin: 0;
+}
+
+legend {
+  background: var(--surface);
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+}
+
+[class^="field-row"] + [class^="field-row"] {
+  margin-top: var(--grouped-element-spacing);
+}
+
+.field-row > * + * {
+  margin-left: var(--grouped-element-spacing);
+}
+
+.field-row-stacked {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-row-stacked * + * {
+  margin-top: var(--grouped-element-spacing);
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}

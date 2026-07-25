@@ -1,0 +1,81 @@
+// Ported from 98.css (MIT) — https://github.com/jdan/98.css
+// Tokens: abstract/tokens.css; icons: ./icon/*.svg
+@use "../abstract/bevel" as *;
+
+button,
+input[type="submit"],
+input[type="reset"] {
+  box-sizing: border-box;
+  border: none;
+  color: transparent;
+  text-shadow: 0 0 var(--text-color);
+  background: var(--surface);
+  @include bevel-raised;
+  border-radius: 0;
+
+  min-width: 75px;
+  min-height: 23px;
+  padding: 0 12px;
+}
+
+button.default,
+input[type="submit"].default,
+input[type="reset"].default {
+  @include bevel-default-button-raised;
+}
+
+.vertical-bar {
+  width: 4px;
+  height: 20px;
+  background: var(--surface);
+  @include bevel-raised;
+}
+
+button:not(:disabled):active,
+input[type="submit"]:not(:disabled):active,
+input[type="reset"]:not(:disabled):active {
+  @include bevel-sunken;
+  text-shadow: 1px 1px var(--text-color);
+}
+
+button.default:not(:disabled):active,
+input[type="submit"].default:not(:disabled):active,
+input[type="reset"].default:not(:disabled):active {
+  @include bevel-default-button-sunken;
+}
+
+/* Sass cannot parse `@media (not(hover))`; use Level 4 `not (hover)` with a space. */
+@media (not (hover)) {
+  button:not(:disabled):hover,
+  input[type="submit"]:not(:disabled):hover,
+  input[type="reset"]:not(:disabled):hover {
+    @include bevel-sunken;
+  }
+}
+
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+button::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner {
+  border: 0;
+}
+
+:disabled,
+:disabled + label,
+input[readonly],
+input[readonly] + label {
+  color: var(--button-shadow);
+}
+
+button:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled,
+:disabled + label {
+  text-shadow: 1px 1px 0 var(--button-highlight);
+}

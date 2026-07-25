@@ -9,7 +9,7 @@ todos:
     status: completed
   - id: "chrome-atoms"
     content: "Port full 98.css surface into SCSS atoms (buttons, window, forms, tabs, tree, progress, …)"
-    status: pending
+    status: completed
   - id: "drop-98css"
     content: "Remove npm 98.css dependency once visual/markup parity is verified"
     status: pending
@@ -28,8 +28,9 @@ isProject: true
 
 ## Progress
 
-- **Step 1 (done):** Vite + Tailwind v4 + Sass scaffold. Entry is [`assets/style/main.css`](assets/style/main.css) (Tailwind theme+utilities → `98.css` → tokens → [`product.scss`](assets/style/product.scss)). `npm run dev` / `build` / `preview`. `cssMinify: false` until 98.css is dropped (`@media (not(hover))` breaks lightningcss minify). Preflight omitted so 98.css chrome is not reset.
-- **Step 2 (done):** Design tokens in [`assets/style/abstract/tokens.css`](assets/style/abstract/tokens.css) (`:root`, after 98.css so we own the vars). Tailwind `@theme` bridge in `main.css` (colors, `font-webhemi`, window size scale). Bevel mixins in [`assets/style/abstract/_bevel.scss`](assets/style/abstract/_bevel.scss) for the chrome port. Note: tokens are plain CSS — importing SCSS partials from the `.css` entry mangled `//` comments and dropped `:root`.
+- **Step 1 (done):** Vite + Tailwind v4 + Sass scaffold. Entry is [`assets/style/main.css`](assets/style/main.css) (Tailwind theme+utilities → tokens). `npm run dev` / `build` / `preview`. `cssMinify: false` while `@media (not (hover))` remains (lightningcss minify). Preflight omitted so Win98 chrome is not reset.
+- **Step 2 (done):** Design tokens in [`assets/style/abstract/tokens.css`](assets/style/abstract/tokens.css) (`:root`). Tailwind `@theme` bridge in `main.css`. Bevel mixins in [`assets/style/abstract/_bevel.scss`](assets/style/abstract/_bevel.scss). Tokens are plain CSS — SCSS partials from the `.css` entry mangled `//` comments.
+- **Step 3 (done):** Full 98.css surface ported into [`assets/style/chrome/`](assets/style/chrome/) partials + icons; entry [`chrome.scss`](assets/style/chrome.scss). Pipeline cut over — npm `98.css` no longer imported. Chrome + product load from [`assets/script/main.js`](assets/script/main.js) (`import` order: chrome → product) because Tailwind’s CSS `@import` resolver does not run Sass on nested SCSS. WebHemi font via `--font-chrome`. Sass-safe media: `@media (not (hover))`. Button/window use bevel mixins.
 
 ## Decisions (confirmed)
 
@@ -120,12 +121,15 @@ Source of truth while porting: [node_modules/98.css/style.css](node_modules/98.c
 
 ```
 assets/style/
-  main.css                # Tailwind @theme + import chain
+  main.css                # Tailwind @theme + tokens only
+  chrome.scss             # @use all chrome partials (imported from main.js)
+  product.scss            # product shell (imported from main.js after chrome)
   abstract/
     tokens.css            # :root design tokens (plain CSS; loaded from main.css)
     _bevel.scss           # raised / sunken / field border mixins
     _index.scss           # @forward bevel (for chrome @use)
   chrome/                 # full former-98.css surface
+    icon/                 # SVG assets from 98.css (MIT)
     _typography.scss
     _button.scss
     _window.scss
@@ -136,18 +140,11 @@ assets/style/
     _surfaces.scss
     _progress.scss
     _slider.scss
-    _index.scss           # @use all chrome
-  product/
-    _base.scss            # html/body.dashboard shell
-    _desktop.scss
-    _toolbar.scss
-    _layouts.scss         # icon/wizard/heading/dialog-panel-layout
-    _primitives.scss      # columns, stack, field-column (@apply where thin)
-    _scrollbar.scss       # custom Win98 scrollbar (JS-coupled)
-    _index.scss
+    _scrollbar.scss
+    _code.scss
 ```
 
-Entry: tokens → Tailwind → chrome → product.
+Entry: Tailwind+tokens (`main.css`) → chrome → product (via `main.js` imports).
 
 ## Vite + npm setup
 
